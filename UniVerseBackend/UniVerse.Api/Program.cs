@@ -1,3 +1,5 @@
+using UniVerseBackend.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 //Add cors
@@ -18,6 +20,9 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
