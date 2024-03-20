@@ -2,7 +2,7 @@
 
 namespace UniVerse.Core.DTOs.Requests;
 
-public class NewsEditRequest(
+public class NewsEditRequestDto(
     int Id,
     string Title,
     string Content,
