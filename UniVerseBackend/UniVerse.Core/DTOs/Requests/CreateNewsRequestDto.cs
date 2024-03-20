@@ -2,8 +2,7 @@
 
 namespace UniVerse.Core.DTOs.Requests;
 
-public record NewsEditRequestDto(
-    int NewsId,
+public record CreateNewsRequestDto(
     string Title,
     string Content,
     bool Pinned,
