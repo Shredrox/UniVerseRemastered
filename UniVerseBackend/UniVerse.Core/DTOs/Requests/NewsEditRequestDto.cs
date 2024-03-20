@@ -7,4 +7,4 @@ public record NewsEditRequestDto(
     string Title,
     string Content,
     bool Pinned,
-    IFormFile Image);
+    IFormFile? Image);
