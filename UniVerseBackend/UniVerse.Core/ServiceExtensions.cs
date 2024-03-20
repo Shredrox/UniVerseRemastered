@@ -13,6 +13,7 @@ public static class ServiceExtensions
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IFriendshipService, FriendshipService>();
         services.AddScoped<IPostService, PostService>();
+        services.AddScoped<ICommentService, CommentService>();
         
         return services;
     }

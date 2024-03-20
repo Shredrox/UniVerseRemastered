@@ -29,6 +29,7 @@ public static class ServiceExtensions
         services.AddScoped<IPostRepository, PostRepository>();
         services.AddScoped<IFriendshipRepository, FriendshipRepository>();
         services.AddScoped<ILikeRepository, LikeRepository>();
+        services.AddScoped<ICommentRepository, CommentRepository>();
 
         return services;
     }
