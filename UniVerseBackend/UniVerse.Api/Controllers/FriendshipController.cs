@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UniVerse.Core.Interfaces.IServices;
 
 namespace UniVerseBackend.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class FriendshipController(IFriendshipService friendshipService) : ControllerBase

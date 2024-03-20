@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UniVerse.Core.DTOs.Requests;
 using UniVerse.Core.Interfaces.IServices;
 
 namespace UniVerseBackend.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class CommentController(ICommentService commentService) : ControllerBase
