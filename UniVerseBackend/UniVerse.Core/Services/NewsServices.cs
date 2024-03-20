@@ -56,9 +56,6 @@ public class NewsServices(INewsRepository newsRepository) : INewsService
 
     public async Task UpdateNews(NewsEditRequestDto request)
     {
-        using var memoryStream = new MemoryStream();
-        await request.Image.CopyToAsync(memoryStream);
-
         var news = await newsRepository.GetNewsById(request.NewsId);
 
         if (news is null)
@@ -66,11 +63,23 @@ public class NewsServices(INewsRepository newsRepository) : INewsService
             throw new NotFoundException();
         }
         
-        news.Title = request.Title;
-        news.Content = request.Content;
+        if (!string.IsNullOrEmpty(request.Title))
+        {
+            news.Title = request.Title;
+        }
+        if (!string.IsNullOrEmpty(request.Content))
+        {
+            news.Content = request.Content;
+        }
+        if (request.Image != null)
+        {
+            using var memoryStream = new MemoryStream();
+            await request.Image.CopyToAsync(memoryStream);
+            news.ImageData = memoryStream.ToArray();
+        }
+        
         news.Pinned = request.Pinned;
-        news.ImageData = memoryStream.ToArray();
-
+        
         await newsRepository.UpdateNews(news);
     }
 
