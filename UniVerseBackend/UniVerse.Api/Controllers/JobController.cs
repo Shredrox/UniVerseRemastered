@@ -15,13 +15,13 @@ public class JobController(IJobService jobService) : ControllerBase
     }
     
     [HttpGet("{jobId:int}")]
-    public async Task<IActionResult> GetJobId(int jobId)
+    public async Task<IActionResult> GetJobById(int jobId)
     {
         return Ok(await jobService.GetJobById(jobId));
     }
     
     [HttpGet("{jobId:int}/is-applied/{username}")]
-    public async Task<IActionResult> GetJobId(int jobId, string username)
+    public async Task<IActionResult> GetJobIsApplied(int jobId, string username)
     {
         return Ok(await jobService.IsAppliedToJob(jobId, username));
     }
