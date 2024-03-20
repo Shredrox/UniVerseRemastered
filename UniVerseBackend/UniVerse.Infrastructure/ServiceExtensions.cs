@@ -32,6 +32,7 @@ public static class ServiceExtensions
         services.AddScoped<ICommentRepository, CommentRepository>();
         services.AddScoped<INewsRepository, NewsRepository>();
         services.AddScoped<IJobRepository, JobRepository>();
+        services.AddScoped<IGroupEventRepository, GroupEventRepository>();
 
         return services;
     }
