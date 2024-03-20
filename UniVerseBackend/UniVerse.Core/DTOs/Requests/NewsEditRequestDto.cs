@@ -3,7 +3,7 @@
 namespace UniVerse.Core.DTOs.Requests;
 
 public class NewsEditRequestDto(
-    int Id,
+    int NewsId,
     string Title,
     string Content,
     bool Pinned,
