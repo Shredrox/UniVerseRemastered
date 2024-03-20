@@ -16,22 +16,25 @@ public class TokenService(
 {
     public string CreateAccessToken(User user)
     {
-        var claims = new[]
+        List<Claim> claims = new()
         {
-            new Claim(ClaimTypes.Email, user.Email)
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Role, user.Role.ToString()),
+            new Claim(ClaimTypes.Name, user.UserName)
         };
-        
+
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-            configuration.GetSection("Jwt:Key").Value!));
+            configuration.GetSection("Jwt:Token").Value!));
 
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
-        
+
         var token = new JwtSecurityToken(
             claims: claims, 
             expires: DateTime.Now.AddHours(1),
             signingCredentials: credentials);
-        
+
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
         return jwt;
     }
     
