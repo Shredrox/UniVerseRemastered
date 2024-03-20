@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using UniVerse.Core.Entities;
+using UniVerse.Core.Interfaces.IRepositories;
 using UniVerse.Infrastructure.Data;
+using UniVerse.Infrastructure.Repositories;
 
 namespace UniVerse.Infrastructure;
 
@@ -22,6 +24,10 @@ public static class ServiceExtensions
         services.AddIdentityCore<User>()
             .AddEntityFrameworkStores<UniVerseDbContext>()
             .AddDefaultTokenProviders();
+
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IPostRepository, PostRepository>();
+        services.AddScoped<IFriendshipRepository, FriendshipRepository>();
 
         return services;
     }
