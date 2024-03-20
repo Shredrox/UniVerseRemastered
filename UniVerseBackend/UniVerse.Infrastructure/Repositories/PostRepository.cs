@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UniVerse.Core.Entities;
+using UniVerse.Core.Exceptions;
 using UniVerse.Core.Interfaces.IRepositories;
 using UniVerse.Infrastructure.Data;
 
@@ -46,6 +47,12 @@ public class PostRepository(UniVerseDbContext context) : IPostRepository
     public async Task DeletePost(int postId)
     {
         var post = await context.Posts.FindAsync(postId);
+        
+        if (post is null)
+        {
+            throw new NotFoundException();
+        }
+        
         context.Posts.Remove(post);
         await context.SaveChangesAsync();
     }
