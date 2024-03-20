@@ -34,6 +34,8 @@ public static class ServiceExtensions
         services.AddScoped<IJobRepository, JobRepository>();
         services.AddScoped<IGroupEventRepository, GroupEventRepository>();
 
+        services.AddSignalR();
+        
         return services;
     }
 }
