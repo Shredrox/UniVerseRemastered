@@ -12,4 +12,9 @@ public class JobOffer
     public int EmployerId { get; set; }
     public Employer Employer { get; set; }
     public ICollection<User> Applicants { get; set; }
+
+    public JobOffer()
+    {
+        Applicants = new List<User>();
+    }
 }

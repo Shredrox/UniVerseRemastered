@@ -9,4 +9,9 @@ public class GroupEvent
     public Organiser Organiser { get; set; }
     public DateTime Date { get; set; }
     public ICollection<User> Attendees { get; set; }
+
+    public GroupEvent()
+    {
+        Attendees = new List<User>();
+    }
 }
