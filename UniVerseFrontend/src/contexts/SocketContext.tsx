@@ -6,6 +6,7 @@ import ChatInterface from "../interfaces/ChatInterface";
 import SocketContextType from "../interfaces/SocketContextType";
 import Notification from "../interfaces/Notification";
 import FriendRequest from "../interfaces/FriendRequest";
+import useAuth from "../hooks/auth/useAuth";
 
 interface SocketProviderProps {
   children: ReactNode;
@@ -15,6 +16,8 @@ export const SocketContext = createContext<SocketContextType | null>(null);
 
 export const SocketProvider = ({ children } : SocketProviderProps) => {
   const [connection, setConnection] = useState<HubConnection | null>(null);
+
+  const { auth } = useAuth();
   
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -40,17 +43,10 @@ export const SocketProvider = ({ children } : SocketProviderProps) => {
   }
 
   useEffect(() => {
-    // const newConnection = new HubConnectionBuilder()
-    //   .withUrl("http://localhost:5135/chats")
-    //   .withAutomaticReconnect()
-    //   .build();
-
-    // setConnection(newConnection);
-
-    // return () => {
-    //   newConnection.stop();
-    // };
-  }, []);
+    if(auth.username !== undefined && connection === null){
+      createHubConnection();
+    }
+  }, [auth.username]);
 
   useEffect(() => {
     if (connection) {
