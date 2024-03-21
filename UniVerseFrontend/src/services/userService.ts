@@ -1,4 +1,5 @@
 import axios from "../axios/axios";
+import getUserRegistrationRequest from "../interfaces/user/UserRegistrationRequest";
 
 export const getUsers = async () =>{
   const response = await axios.get('User');
@@ -80,5 +81,20 @@ export const confirmPassword = async ({ username, password }) =>{
 
 export const updateUserProfile = async (data) =>{
   const response = await axios.post('User/update-profile', data);
+  return response.data;
+}
+
+export const getUserRegistrationRequests = async () : Promise<getUserRegistrationRequest[]> =>{
+  const resposne = await axios.get('User/registration-requests')
+  return resposne.data;
+}
+
+export const approveUser = async (username) => {
+  const response = await axios.put(`User/${username}/approve`);
+  return response.data;
+}
+
+export const rejectUser = async (username) => {
+  const response = await axios.delete(`User/${username}/reject`);
   return response.data;
 }

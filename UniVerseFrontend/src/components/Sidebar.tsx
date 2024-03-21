@@ -10,6 +10,7 @@ import SettingsIcon from '../assets/icons/icon-cog.svg'
 import useLogout from '../hooks/auth/useLogout';
 import { FaUserAstronaut } from "react-icons/fa";
 import useProfilePicture from '../hooks/query/useProfilePicture';
+import { MdAdminPanelSettings } from "react-icons/md";
 import { useSocket } from '../hooks/useSocket';
 
 const Sidebar = () => {
@@ -46,6 +47,16 @@ const Sidebar = () => {
         <img src={UniVerseLogo}/>
         UniVerse
       </div>
+      {auth?.role === "ADMIN" &&
+        <div className='admin-nav-button-container'>
+          <Link to="/admin" className='link'>
+            <button className={isActive("/admin")}>
+              <MdAdminPanelSettings className='link-icon'/>
+              Admin
+            </button>
+          </Link>
+        </div>
+      }
       <div className='profile-container'>
         <div className='profile-picture'>
           {profilePicture?.size > 0 ? 

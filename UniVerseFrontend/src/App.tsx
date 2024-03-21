@@ -16,6 +16,7 @@ import ErrorPage from './pages/ErrorPage'
 import NotFound from './pages/NotFound'
 import PersistLogin from './routes/PersistLogin'
 import RouterErrorFallback from './components/fallback/RouterErrorFallback'
+import Admin from './pages/Admin'
 
 function App() {
   const router = createBrowserRouter(
@@ -25,6 +26,7 @@ function App() {
         <Route element={<MainLayout/>}>
           <Route element={<PersistLogin/>}>
             <Route element={<ProtectedRoute/>} errorElement={<RouterErrorFallback/>}>
+              <Route path="/admin" element={<Admin/>}/>
               <Route path="/home" element={<Home/>}/>
               <Route path="/profile/:username" element={<Profile/>}/>
               <Route path="/news" element={<News/>}/>

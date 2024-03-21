@@ -78,14 +78,19 @@ const AccessForm = () => {
       navigate(from, { replace: true });
     }
     catch(error){
+      console.log(error);
       if(!error?.response){
         setError('No response');
         setIsError(true);
-      }else if(error.response?.status === 400){
-        setError('An error occurred');
+      }else if(error.response?.status === 423){
+        setError('Your account is not approved');
+        setIsError(true);
+      }
+      else if(error.response?.status === 403){
+        setError('Incorrect email or password');
         setIsError(true);
       }else if(error.response?.status === 404){
-        setError('Incorrect email or password');
+        setError('Account not found');
         setIsError(true);
       }else{
         setError('Error');
