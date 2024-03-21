@@ -24,6 +24,7 @@ public class FriendshipRepository(UniVerseDbContext context) : IFriendshipReposi
     public async Task<List<Friendship>> GetFriendshipsByUserAndStatus(User user, FriendshipStatus status)
     {
         return await context.Friendships
+            .Include(f => f.User1)
             .Where(f => f.User2 == user && f.FriendshipStatus == status)
             .ToListAsync();
     }
@@ -31,6 +32,8 @@ public class FriendshipRepository(UniVerseDbContext context) : IFriendshipReposi
     public async Task<List<Friendship>> GetFriendshipsByUser1OrUser2(User user1, User user2)
     {
         return await context.Friendships
+            .Include(c => c.User1)
+            .Include(c => c.User2)
             .Where(f => f.User1 == user1 || f.User2 == user2)
             .ToListAsync();
     }
