@@ -9,7 +9,7 @@ public class JobOffer
     public string Location { get; set; }
     public string Type { get; set; }
     public string Salary { get; set; }
-    public string EmployerId { get; set; }
-    public User Employer { get; set; }
+    public int EmployerId { get; set; }
+    public Employer Employer { get; set; }
     public ICollection<User> Applicants { get; set; }
 }

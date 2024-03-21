@@ -8,7 +8,8 @@ namespace UniVerse.Core.Services;
 
 public class GroupEventService(
     IGroupEventRepository groupEventRepository,
-    IUserRepository userRepository) : IGroupEventService
+    IUserRepository userRepository,
+    IOrganiserRepository organiserRepository) : IGroupEventService
 {
     public async Task<List<GroupEvent>> GetAllGroupEvents()
     {
@@ -74,9 +75,9 @@ public class GroupEventService(
 
     public async Task CreateGroupEvent(CreateGroupEventRequestDto request)
     {
-        var user = await userRepository.GetUserByUsername(request.OrganiserName);
+        var organiser = await organiserRepository.GetOrganiserByName(request.OrganiserName);
 
-        if (user is null)
+        if (organiser is null)
         {
             throw new NotFoundException();
         }
@@ -86,7 +87,7 @@ public class GroupEventService(
             Title = request.Title,
             Description = request.Description,
             Date = request.Date,
-            Organiser = user
+            Organiser = organiser
         };
 
         await groupEventRepository.InsertGroupEvent(groupEvent);

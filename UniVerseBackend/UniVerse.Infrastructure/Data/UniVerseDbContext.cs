@@ -12,7 +12,9 @@ public class UniVerseDbContext(DbContextOptions options) : IdentityDbContext<Use
     public DbSet<Friendship> Friendships { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<News> News { get; set; }
+    public DbSet<Employer> Employers { get; set; }
     public DbSet<JobOffer> JobOffers { get; set; }
+    public DbSet<Organiser> Organisers { get; set; }
     public DbSet<GroupEvent> GroupEvents { get; set; }
     public DbSet<Chat> Chats { get; set; }
     public DbSet<Message> Messages { get; set; }

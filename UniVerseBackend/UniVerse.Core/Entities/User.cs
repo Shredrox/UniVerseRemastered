@@ -13,4 +13,6 @@ public class User : IdentityUser
     public byte[] ProfilePicture { get; set; }
     public bool IsOnline { get; set; }
     public bool IsEnabled { get; set; }
+    public ICollection<GroupEvent> GroupEvents { get; set; }
+    public ICollection<JobOffer> JobOffers { get; set; }
 }

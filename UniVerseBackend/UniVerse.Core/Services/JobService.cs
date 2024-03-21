@@ -8,7 +8,8 @@ namespace UniVerse.Core.Services;
 
 public class JobService(
     IJobRepository jobRepository,
-    IUserRepository userRepository) : IJobService
+    IUserRepository userRepository,
+    IEmployerRepository employerRepository) : IJobService
 {
     public async Task<List<JobOffer>> GetAllJobs()
     {
@@ -35,13 +36,13 @@ public class JobService(
 
     public async Task CreateJob(CreateJobOfferRequestDto request)
     {
-        var user = await userRepository.GetUserByUsername(request.EmployerName);
+        var employer = await employerRepository.GetEmployerByName(request.EmployerName);
 
-        if (user is null)
+        if (employer is null)
         {
             throw new NotFoundException();
         }
-
+        
         var jobOffer = new JobOffer
         {
             Title = request.Title,
@@ -50,7 +51,7 @@ public class JobService(
             Salary = request.Salary,
             Requirements = request.Requirements,
             Type = request.Type,
-            Employer = user
+            Employer = employer
         };
 
         await jobRepository.InsertJobOffer(jobOffer);
