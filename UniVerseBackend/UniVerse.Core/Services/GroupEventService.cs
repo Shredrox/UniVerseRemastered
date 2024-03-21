@@ -1,4 +1,5 @@
 ﻿using UniVerse.Core.DTOs.Requests;
+using UniVerse.Core.DTOs.Responses;
 using UniVerse.Core.Entities;
 using UniVerse.Core.Exceptions;
 using UniVerse.Core.Interfaces.IRepositories;
@@ -11,25 +12,53 @@ public class GroupEventService(
     IUserRepository userRepository,
     IOrganiserRepository organiserRepository) : IGroupEventService
 {
-    public async Task<List<GroupEvent>> GetAllGroupEvents()
+    public async Task<List<GroupEventResponseDto>> GetAllGroupEvents()
     {
-        return await groupEventRepository.GetGroupEvents();
+        var groupEvents = await groupEventRepository.GetGroupEvents();
+
+        return groupEvents
+            .Select(e => new GroupEventResponseDto(
+                e.Id, 
+                e.Title, 
+                e.Description, 
+                e.Date.ToString("dd-MM-yyyy HH:mm"))
+            )
+            .ToList();
     }
 
-    public async Task<List<GroupEvent>> GetTrendingGroupEvents()
+    public async Task<List<GroupEventResponseDto>> GetTrendingGroupEvents()
     {
         var groupEvents = await groupEventRepository.GetGroupEvents();
 
         var trendingGroupEvents = groupEvents
-            .Where(e => e.Attendees.Count > 10)
+            .Where(e => e.Attendees.Count > 0)
             .ToList();
 
-        return trendingGroupEvents;
+        return trendingGroupEvents
+            .Select(e => new GroupEventResponseDto(
+                e.Id, 
+                e.Title, 
+                e.Description, 
+                e.Date.ToString("dd-MM-yyyy HH:mm"))
+            )
+            .ToList();
     }
 
-    public async Task<GroupEvent?> GetGroupEventById(int groupEventId)
+    public async Task<GroupEventResponseDto?> GetGroupEventById(int groupEventId)
     {
-        return await groupEventRepository.GetGroupEventById(groupEventId);
+        var groupEvent = await groupEventRepository.GetGroupEventById(groupEventId);
+
+        if (groupEvent is null)
+        {
+            throw new NotFoundException();
+        }
+        
+        return new GroupEventResponseDto(
+            groupEvent.Id, 
+            groupEvent.Title, 
+            groupEvent.Description,
+            groupEvent.Date.ToString("dd-MM-yyyy HH:mm")
+            );
     }
 
     public async Task<bool> IsAttending(int groupEventId, string username)

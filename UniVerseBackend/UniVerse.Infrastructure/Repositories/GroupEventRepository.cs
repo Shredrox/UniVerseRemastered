@@ -10,12 +10,16 @@ public class GroupEventRepository(UniVerseDbContext context) : IGroupEventReposi
 {
     public async Task<List<GroupEvent>> GetGroupEvents()
     {
-        return await context.GroupEvents.ToListAsync();
+        return await context.GroupEvents
+            .Include(e => e.Attendees)
+            .ToListAsync();
     }
 
     public async Task<GroupEvent?> GetGroupEventById(int id)
     {
-        return await context.GroupEvents.FindAsync(id);
+        return await context.GroupEvents
+            .Include(e => e.Attendees)
+            .FirstOrDefaultAsync(e => e.Id == id);
     }
 
     public async Task InsertGroupEvent(GroupEvent groupEvent)
