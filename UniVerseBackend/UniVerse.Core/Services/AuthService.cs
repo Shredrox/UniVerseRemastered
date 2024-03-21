@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using UniVerse.Core.DTOs.Requests;
 using UniVerse.Core.DTOs.Responses;
 using UniVerse.Core.Entities;
+using UniVerse.Core.Enums;
 using UniVerse.Core.Interfaces.IRepositories;
 using UniVerse.Core.Interfaces.IServices;
 
@@ -23,7 +24,10 @@ public class AuthService(
         var user = new User
         {
             UserName = request.Username,
-            Email = request.Email
+            Email = request.Email,
+            Role = UserRole.User,
+            IsEnabled = true,
+            IsOnline = false
         };
 
         await userRepository.InsertUser(user, request.Password);
