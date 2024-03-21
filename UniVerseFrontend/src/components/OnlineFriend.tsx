@@ -1,7 +1,11 @@
 import useProfilePicture from "../hooks/query/useProfilePicture";
 import { FaUserAstronaut } from "react-icons/fa";
 
-const OnlineFriend = ({friend}) => {
+interface OnlineFriendProps{
+  friend: string;
+}
+
+const OnlineFriend = ({friend} : OnlineFriendProps) => {
   const { profilePicture } = useProfilePicture("onlineUserProfilePicture", friend);
 
   return (
