@@ -50,9 +50,9 @@ public class UserRepository(
             .FirstOrDefaultAsync(u => u.RefreshToken == refreshToken && u.RefreshTokenValidity > DateTime.Now.ToUniversalTime());
     }
 
-    public Task<bool> ExistsByUsername(string username)
+    public async Task<bool> ExistsByUsername(string username)
     {
-        throw new NotImplementedException();
+        return await context.Users.AnyAsync(u => u.UserName == username);
     }
 
     public async Task InsertUser(User user, string password)
