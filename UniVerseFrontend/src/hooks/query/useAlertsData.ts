@@ -24,6 +24,7 @@ const useAlertsData = (loggedUser : string) =>{
   } = useQuery({ 
     queryKey: ["userOnlineFriends", loggedUser],
     queryFn: () => getUserOnlineFriends(loggedUser),
+    enabled: loggedUser !== undefined
   });
 
   const {data: userNotifications,
@@ -32,7 +33,8 @@ const useAlertsData = (loggedUser : string) =>{
     error: userNotificationsError
   } = useQuery({ 
     queryKey: ["userNotifications", loggedUser],
-    queryFn: () => getUserNotifications(loggedUser)
+    queryFn: () => getUserNotifications(loggedUser),
+    enabled: loggedUser !== undefined
   });
 
   const {data: friendRequestsData,
@@ -41,7 +43,8 @@ const useAlertsData = (loggedUser : string) =>{
     error: friendRequestsDataError
   } = useQuery({ 
     queryKey: ["friendRequests", loggedUser],
-    queryFn: () => getUserFriendRequests(loggedUser)
+    queryFn: () => getUserFriendRequests(loggedUser),
+    enabled: loggedUser !== undefined
   });
 
   useEffect(() =>{
