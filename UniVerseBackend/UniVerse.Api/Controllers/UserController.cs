@@ -57,7 +57,7 @@ public class UserController(
     }
         
     [HttpPost("update-profile")]
-    public async Task<IActionResult> UpdateUserProfile([FromBody] UpdateProfileRequestDto request)
+    public async Task<IActionResult> UpdateUserProfile([FromForm] UpdateProfileRequestDto request)
     {
         var result = await userService.UpdateUserProfile(request);
 

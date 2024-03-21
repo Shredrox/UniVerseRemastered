@@ -18,7 +18,7 @@ public class LikeController(ILikeService likeService) : ControllerBase
     }
     
     [HttpGet("post/{postId:int}/likedBy/{username}")]
-    public async Task<IActionResult> GetPostLikes(int postId, string username)
+    public async Task<IActionResult> GetPostIsLiked(int postId, string username)
     {
         var isLiked = await likeService.IsPostLiked(postId, username);
         return Ok(isLiked);
@@ -31,7 +31,7 @@ public class LikeController(ILikeService likeService) : ControllerBase
         return Ok("Post liked.");
     }
     
-    [HttpPost("post/{postId:int}/unlike")]
+    [HttpDelete("post/{postId:int}/unlike")]
     public async Task<IActionResult> UnlikePost(int postId, [FromQuery] string username)
     {
         await likeService.UnlikePost(postId, username);

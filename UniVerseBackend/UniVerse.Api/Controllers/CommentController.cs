@@ -41,7 +41,7 @@ public class CommentController(ICommentService commentService) : ControllerBase
     }
     
     [HttpPost("add-comment")]
-    public async Task<IActionResult> GetCommentReplies([FromBody] AddCommentRequestDto request)
+    public async Task<IActionResult> AddComment([FromBody] AddCommentRequestDto request)
     {
         await commentService.CreateComment(request);
         return Ok("Comment added.");

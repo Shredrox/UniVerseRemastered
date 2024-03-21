@@ -52,7 +52,7 @@ public class PostController(
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreatePost([FromBody] CreatePostRequestDto request)
+    public async Task<IActionResult> CreatePost([FromForm] CreatePostRequestDto request)
     {
         var newPost = await postService.CreatePost(request);
         return File(newPost.ImageData, "image/jpeg");

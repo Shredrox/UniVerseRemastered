@@ -1,13 +1,19 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using UniVerse.Core.DTOs.Requests;
+using UniVerse.Core.Interfaces.IClients;
 using UniVerse.Core.Interfaces.IServices;
+using UniVerse.Infrastructure.Hubs;
 
 namespace UniVerseBackend.Controllers;
 
 [Authorize]
 [Route("api/[controller]")]
 [ApiController]
-public class FriendshipController(IFriendshipService friendshipService) : ControllerBase
+public class FriendshipController(
+    IHubContext<ChatHub, IChatClient> hubContext,
+    IFriendshipService friendshipService) : ControllerBase
 {
     [HttpGet("{username}/online-friends")]
     public async Task<IActionResult> GetUserOnlineFriends(string username)
@@ -36,10 +42,19 @@ public class FriendshipController(IFriendshipService friendshipService) : Contro
     [HttpGet("check-friendship")]
     public async Task<IActionResult> CheckFriendship([FromQuery] string user1Name, [FromQuery] string user2Name)
     {
-        return Ok(await friendshipService.CheckUsersFriendship(user1Name, user2Name));
+        var friendshipStatus = await friendshipService.CheckUsersFriendship(user1Name, user2Name);
+        return Ok(friendshipStatus.ToString().ToUpper());
     }
         
-    //TODO: Implement socket/signalR endpoints for friend requests
+    [HttpPost("send-friend-request")]
+    public async Task<IActionResult> SendFriendRequest([FromBody] FriendRequestDto request)
+    {
+        var friendRequestResponse = await friendshipService.CreateFriendship(request);
+        
+        await hubContext.Clients.Group(request.Receiver).ReceiveFriendRequest(friendRequestResponse);
+        
+        return Ok();
+    }
         
     [HttpPost("accept-friend-request/{friendRequestId:int}")]
     public async Task<IActionResult> AcceptFriendRequest(int friendRequestId)
