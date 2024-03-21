@@ -1,4 +1,5 @@
-﻿using UniVerse.Core.DTOs.Responses;
+﻿using UniVerse.Core.DTOs.Requests;
+using UniVerse.Core.DTOs.Responses;
 using UniVerse.Core.Entities;
 using UniVerse.Core.Enums;
 using UniVerse.Core.Exceptions;
@@ -74,10 +75,10 @@ public class FriendshipService(
         return friendship?.FriendshipStatus ?? FriendshipStatus.NotFriends;
     }
 
-    public async Task CreateFriendship(string senderName, string receiverName)
+    public async Task<FriendRequestResponseDto>  CreateFriendship(FriendRequestDto request)
     {
-        var sender = await userRepository.GetUserByUsername(senderName);
-        var receiver = await userRepository.GetUserByUsername(receiverName);
+        var sender = await userRepository.GetUserByUsername(request.Sender);
+        var receiver = await userRepository.GetUserByUsername(request.Receiver);
 
         if (sender is null || receiver is null)
         {
@@ -89,10 +90,12 @@ public class FriendshipService(
             User1 = sender,
             User2 = receiver,
             FriendshipStatus = FriendshipStatus.Pending,
-            Date = DateTime.Now
+            Date = DateTime.Now.ToUniversalTime()
         };
 
         await friendshipRepository.InsertFriendship(friendship);
+
+        return new FriendRequestResponseDto(friendship.Id, request.Sender);
     }
 
     public async Task AcceptFriendRequest(int friendshipId)

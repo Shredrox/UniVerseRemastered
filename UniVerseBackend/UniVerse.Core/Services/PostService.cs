@@ -88,7 +88,7 @@ public class PostService(
             Content = request.Content,
             AuthorName = request.AuthorName,
             ImageData = memoryStream.ToArray(),
-            Timestamp = DateTime.Now,
+            Timestamp = DateTime.Now.ToUniversalTime(),
             User = user
         };
 

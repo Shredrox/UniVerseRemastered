@@ -23,12 +23,12 @@ public class CommentService(
 
     public async Task<List<Comment>> GetPostComments(int postId)
     {
-        return await commentRepository.GetCommentsByPostId(postId);
+        return await commentRepository.GetCommentsByPostIdAndParentCommentIsNull(postId);
     }
 
     public async Task<int> GetPostCommentsCount(int postId)
     {
-        var comments = await commentRepository.GetCommentsByPostIdAndParentCommentIsNull(postId);
+        var comments = await commentRepository.GetCommentsByPostId(postId);
         return comments.Count;
     }
 
@@ -61,10 +61,17 @@ public class CommentService(
     public async Task AddReply(int commentId, AddCommentRequestDto request)
     {
         var user = await userRepository.GetUserByUsername(request.Username);
-        var post = await postRepository.GetPostById(request.PostId);
+        
         var comment = await commentRepository.GetCommentsById(commentId);
-
-        if (user is null || post is null || comment is null)
+        
+        if (user is null || comment is null)
+        {
+            throw new NotFoundException();
+        }
+        
+        var post = await postRepository.GetPostById(comment.PostId);
+        
+        if (post is null)
         {
             throw new NotFoundException();
         }

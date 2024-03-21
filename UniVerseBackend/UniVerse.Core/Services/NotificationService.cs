@@ -23,7 +23,7 @@ public class NotificationService(
         var notifications = await notificationRepository.GetNotificationsByUser(user);
 
         var response = notifications
-            .Select(n => new NotificationResponseDto(n.Message))
+            .Select(n => new NotificationResponseDto(n.Message, n.IsRead))
             .ToList();
         
         return response;
@@ -67,7 +67,7 @@ public class NotificationService(
 
         await notificationRepository.InsertNotification(notification);
 
-        return new NotificationResponseDto(notification.Message);
+        return new NotificationResponseDto(notification.Message, notification.IsRead);
     }
 
     

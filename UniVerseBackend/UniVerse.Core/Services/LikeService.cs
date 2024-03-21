@@ -18,7 +18,14 @@ public class LikeService(
 
     public async Task<bool> IsPostLiked(int postId, string username)
     {
-        return await likeRepository.ExistsByPostIdAndUserId(postId, username);
+        var user = await userRepository.GetUserByUsername(username);
+
+        if (user is null)
+        {
+            throw new NotFoundException();
+        }
+        
+        return await likeRepository.ExistsByPostIdAndUserId(postId, user.Id);
     }
 
     public async Task LikePost(int postId, string username)
