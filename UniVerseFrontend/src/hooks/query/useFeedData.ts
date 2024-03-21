@@ -30,9 +30,7 @@ const useFeedData = (user : string, userRole : string) => {
   const {mutateAsync: addPostMutation} = useMutation({
     mutationFn: addPost,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["posts"]
-      });
+      queryClient.invalidateQueries(["posts"]);
     },
   });
 

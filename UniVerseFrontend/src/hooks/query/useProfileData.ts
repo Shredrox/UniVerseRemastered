@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { checkFriendship, getUserByName, getUserFriendsCount, getUserProfilePicture, removeFriend, updateUserProfile } from "../../services/userService";
-import { useSocket } from "./useSocket";
+import { useSocket } from "../useSocket";
 import { getUserPostsCount } from "../../services/postService";
 
 const useProfileData = (profileUser : string, loggedUser : string) =>{
@@ -61,18 +61,14 @@ const useProfileData = (profileUser : string, loggedUser : string) =>{
   const {mutateAsync: addFriendMutation} = useMutation({
     mutationFn: sendFriendRequest,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["friendshipStatus", loggedUser, user?.username]
-      });
+      queryClient.invalidateQueries(["friendshipStatus", loggedUser, user?.username]);
     },
   });
 
   const {mutateAsync: removeFriendMutation} = useMutation({
     mutationFn: removeFriend,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["friendshipStatus", loggedUser, user?.username]
-      });
+      queryClient.invalidateQueries(["friendshipStatus", loggedUser, user?.username]);
     },
   });
 

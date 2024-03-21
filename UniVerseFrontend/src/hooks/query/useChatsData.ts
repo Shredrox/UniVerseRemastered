@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { useSocket } from "./useSocket";
+import { useSocket } from "../useSocket";
 import { getChats } from "../../services/chatService";
 
 const useChatsData = (user : string) =>{
@@ -20,9 +20,7 @@ const useChatsData = (user : string) =>{
   const {mutateAsync: addChatMutation} = useMutation({
     mutationFn: createChat,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["chats", user]
-      });
+      queryClient.invalidateQueries(["chats", user]);
     },
   });
 

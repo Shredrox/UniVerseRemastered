@@ -43,27 +43,21 @@ const usePostData = (postId : number, user : string) =>{
   const {mutateAsync: likePostMutation} = useMutation({
     mutationFn: likePost,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["postLikes", postId]
-      });
+      queryClient.invalidateQueries(["postLikes", postId]);
     },
   });
 
   const {mutateAsync: unlikePostMutation} = useMutation({
     mutationFn: unlikePost,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["postLikes", postId]
-      });
+      queryClient.invalidateQueries(["postLikes", postId]);
     },
   });
 
   const {mutateAsync: deletePostMutation} = useMutation({
     mutationFn: deletePost,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["posts"]
-      });
+      queryClient.invalidateQueries(["posts"]);
     },
   });
 

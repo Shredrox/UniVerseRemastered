@@ -1,11 +1,19 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUserOnlineFriends, getUserFriendRequests, acceptFriendRequest, rejectFriendRequest } from "../../services/userService";
 import { useEffect } from "react";
-import { useSocket } from '../hooks/useSocket'
+import { useSocket } from '../useSocket'
 import { getUserNotifications, readUserNotifications } from "../../services/alertService";
 
 const useAlertsData = (loggedUser : string) =>{
-  const { notifications, setUserNotifications, friendRequests, setUserFriendRequests, newOnlineFriend, setNewOnlineFriend } = useSocket();
+  const { 
+    notifications, 
+    setUserNotifications, 
+    friendRequests, 
+    setUserFriendRequests, 
+    newOnlineFriend, 
+    setNewOnlineFriend 
+  } = useSocket();
+
   const queryClient = useQueryClient();
 
   const {data: onlineFriends, 
@@ -58,27 +66,21 @@ const useAlertsData = (loggedUser : string) =>{
   const {mutateAsync: readNotificationsMutation} = useMutation({
     mutationFn: readUserNotifications,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["userNotifications", loggedUser]
-      });
+      queryClient.invalidateQueries(["userNotifications", loggedUser]);
     },
   });
 
   const {mutateAsync: acceptFriendRequestMutation} = useMutation({
     mutationFn: acceptFriendRequest,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["friendRequests", loggedUser]
-      });
+      queryClient.invalidateQueries(["friendRequests", loggedUser]);
     },
   });
 
   const {mutateAsync: rejectFriendRequestMutation} = useMutation({
     mutationFn: rejectFriendRequest,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["friendRequests", loggedUser]
-      });
+      queryClient.invalidateQueries(["friendRequests", loggedUser]);
     },
   });
 

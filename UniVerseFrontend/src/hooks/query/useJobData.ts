@@ -25,27 +25,21 @@ const useJobData = (jobId : number, user : string) =>{
   const {mutateAsync: applyToJobMutation} = useMutation({
     mutationFn: applyToJob,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["jobIsApplied", jobId, user]
-      });
+      queryClient.invalidateQueries(["jobIsApplied", jobId, user]);
     },
   });
 
   const {mutateAsync: cancelApplicationToJobMutation} = useMutation({
     mutationFn: cancelApplicationToJob,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["jobIsApplied", jobId, user]
-      });
+      queryClient.invalidateQueries(["jobIsApplied", jobId, user]);
     },
   });
 
   const {mutateAsync: deleteJobMutation} = useMutation({
     mutationFn: deleteJob,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["jobOffers"]
-      });
+      queryClient.invalidateQueries(["jobOffers"]);
     },
   });
 

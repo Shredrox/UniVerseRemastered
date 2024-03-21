@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { useSocket } from "./useSocket";
+import { useSocket } from "../useSocket";
 import { getChat } from "../../services/chatService";
 
 const useMessagesData = (loggedUser : string, chatUser: string) =>{

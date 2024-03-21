@@ -26,9 +26,7 @@ const useNewsListData = () =>{
   const {mutateAsync: addNewsMutation} = useMutation({
     mutationFn: addNews,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey:["news"]
-      });
+      queryClient.invalidateQueries(["news"]);
     },
   });
 
