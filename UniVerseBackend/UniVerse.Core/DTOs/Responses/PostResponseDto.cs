@@ -6,4 +6,4 @@ public record PostResponseDto(
     string Content,
     byte[] ImageData,
     string AuthorName,
-    DateTime Timestamp);
+    string Timestamp);

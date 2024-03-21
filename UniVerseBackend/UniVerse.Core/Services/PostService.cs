@@ -26,7 +26,7 @@ public class PostService(
                 p.Content, 
                 p.ImageData, 
                 p.AuthorName, 
-                p.Timestamp)
+                p.Timestamp.ToString("dd-MM-yyyy HH:mm"))
             )
             .ToList();
 
@@ -44,7 +44,7 @@ public class PostService(
                 p.Content, 
                 p.ImageData, 
                 p.AuthorName, 
-                p.Timestamp)
+                p.Timestamp.ToString("dd-MM-yyyy HH:mm"))
             )
             .ToList();
 
@@ -62,7 +62,7 @@ public class PostService(
                 p.Content, 
                 p.ImageData, 
                 p.AuthorName, 
-                p.Timestamp)
+                p.Timestamp.ToString("dd-MM-yyyy HH:mm"))
             )
             .ToList();
 
