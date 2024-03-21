@@ -35,6 +35,8 @@ public static class ServiceExtensions
         services.AddScoped<IGroupEventRepository, GroupEventRepository>();
         services.AddScoped<IMessageRepository, MessageRepository>();
         services.AddScoped<IChatRepository, ChatRepository>();
+        services.AddScoped<IEmployerRepository, EmployerRepository>();
+        services.AddScoped<IOrganiserRepository, OrganiserRepository>();
 
         services.AddSignalR();
         
