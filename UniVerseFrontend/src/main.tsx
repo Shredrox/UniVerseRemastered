@@ -7,6 +7,7 @@ import { AuthProvider } from './contexts/AuthContext.jsx'
 import './styles/style.css'
 import { ErrorBoundary } from 'react-error-boundary'
 import ErrorPage from './pages/ErrorPage.jsx'
+import { SocketProvider } from './contexts/SocketContext.tsx'
 
 const queryClient = new QueryClient()
 
@@ -15,8 +16,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <ErrorBoundary FallbackComponent={ErrorPage}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <App />
-          <ReactQueryDevtools initialIsOpen={false}/>
+          <SocketProvider>
+            <App />
+            <ReactQueryDevtools initialIsOpen={false}/>
+          </SocketProvider>
         </AuthProvider>
       </QueryClientProvider>
     </ErrorBoundary>
