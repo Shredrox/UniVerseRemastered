@@ -6,5 +6,5 @@ public record UpdateProfileRequestDto(
     string Username,
     string NewUsername,
     string NewEmail,
-    string NewPassword,
+    string? NewPassword,
     IFormFile? ProfilePicture);
