@@ -59,6 +59,7 @@ export const SocketProvider = ({ children } : SocketProviderProps) => {
       connection.on('ChatCreated', onChatCreated);
       connection.on('ReceiveNotification', onNotificationReceived);
       connection.on('ReceiveFriendRequest', onFriendRequestReceieved);
+      connection.on('ReceiveOnlineAlert', onFriendOnline);
     }
   }, [connection]);
 
@@ -109,18 +110,18 @@ export const SocketProvider = ({ children } : SocketProviderProps) => {
   //Notifications
   const sendNotification = async ({message, type, source, recipientName} : 
     { message: string, type: string, source: string, recipientName : string }) =>{
-      try {
-        const notification = {
-          message,
-          type,
-          source,
-          recipientName
-        };
-  
-        await axios.post('Notification/send-notification', notification);
-      } catch (error) {
-        console.error('Error sending notification:', error);
-      }
+    try {
+      const notification = {
+        message,
+        type,
+        source,
+        recipientName
+      };
+
+      await axios.post('Notification/send-notification', notification);
+    } catch (error) {
+      console.error('Error sending notification:', error);
+    }
   }
 
   const onNotificationReceived = (notification : Notification) =>{
@@ -148,21 +149,25 @@ export const SocketProvider = ({ children } : SocketProviderProps) => {
     setFriendRequests(newFriendRequests);
   }
 
-  // //Online Friends
-  // const onFriendOnline = () =>{
-  //   setNewOnlineFriend(!newOnlineFriend);
-  // }
+  //Online Friends
+  const onFriendOnline = () =>{
+    setNewOnlineFriend(!newOnlineFriend);
+  }
 
-  // const sendIsOnlineAlert = (username) =>{
-  //   if(stompClient && stompClient.connected){
-  //     stompClient.send('/app/sendIsOnlineAlert', {}, username);
-  //   }
-  // }
+  const sendIsOnlineAlert = async (username : string) =>{
+    try {
+      await axios.post('Friendship/send-online-alert', {},
+      {
+        params: {username}
+      });
+    } catch (error) {
+      console.error('Error sending online alert:', error);
+    }
+  }
 
   const contextValue : SocketContextType = {
     notifications, 
     sendNotification,
-    //sendPrivateNotification,
     setUserNotifications,
     createHubConnection,
     disconnectFromHub,
@@ -177,7 +182,7 @@ export const SocketProvider = ({ children } : SocketProviderProps) => {
     setUserFriendRequests,
     newOnlineFriend,
     setNewOnlineFriend,
-    //sendIsOnlineAlert
+    sendIsOnlineAlert
   };
 
   return (

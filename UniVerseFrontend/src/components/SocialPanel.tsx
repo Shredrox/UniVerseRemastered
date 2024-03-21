@@ -88,17 +88,17 @@ const SocialPanel = () => {
       </div>
       }
       
-      {/* <div className='friends-container'>
+      <div className='friends-container'>
         Online Friends
         <div className='friends-list'>
-          {alertData.onlineFriends.length > 0 ?
+          {alertData.onlineFriends?.length > 0 ?
           alertData.onlineFriends?.map((friend, index) => 
           <OnlineFriend key={index} friend={friend}/>
           ) 
           :
           <div>No Online Friends</div>}
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }

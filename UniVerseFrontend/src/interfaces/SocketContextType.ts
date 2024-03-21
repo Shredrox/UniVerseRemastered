@@ -18,6 +18,7 @@ export default interface SocketContextType {
   friendRequests: FriendRequest[];
   sendFriendRequest: (friendRequest : {sender : string, receiver : string}) => Promise<void>;
   setUserFriendRequests: (newFriendRequests : FriendRequest[]) => void;
+  sendIsOnlineAlert: (username : string) => void;
   newOnlineFriend: boolean;
   setNewOnlineFriend: React.Dispatch<React.SetStateAction<boolean>>;
 }
