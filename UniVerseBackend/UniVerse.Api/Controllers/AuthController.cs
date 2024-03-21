@@ -1,15 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using UniVerse.Core.DTOs.Requests;
+using UniVerse.Core.Interfaces.IClients;
 using UniVerse.Core.Interfaces.IServices;
+using UniVerse.Infrastructure.Hubs;
 
 namespace UniVerseBackend.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class AuthController(
+    IHubContext<ChatHub, IChatClient> hubContext,
     IAuthService authService,
     IUserService userService,
-    ITokenService tokenService) : ControllerBase
+    ITokenService tokenService,
+    IFriendshipService friendshipService) : ControllerBase
 {
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequestDto request)
@@ -43,6 +48,13 @@ public class AuthController(
             SameSite = SameSiteMode.None
         });
             
+        var friends = await friendshipService.GetFriendsUsernames(username);
+
+        foreach (var friend in friends)
+        {
+            await hubContext.Clients.Group(friend).ReceiveOnlineAlert(username);
+        }
+        
         return Ok(new { username, accessToken, role });
     }
 
@@ -69,6 +81,7 @@ public class AuthController(
             
         user.RefreshToken = null;
         user.RefreshTokenValidity = null;
+        user.IsOnline = false;
 
         await userService.UpdateUserRefreshToken(user);
 

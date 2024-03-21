@@ -9,4 +9,5 @@ public interface IChatClient
     Task ChatCreated(ChatResponseDto chat);
     Task ReceiveNotification(NotificationResponseDto notification);
     Task ReceiveFriendRequest(FriendRequestResponseDto friendRequest);
+    Task ReceiveOnlineAlert(string username);
 }

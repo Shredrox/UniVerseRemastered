@@ -55,6 +55,19 @@ public class FriendshipController(
         
         return Ok();
     }
+    
+    [HttpPost("send-online-alert")]
+    public async Task<IActionResult> SendOnlineAlert([FromQuery] string username)
+    {
+        var friends = await friendshipService.GetFriendsUsernames(username);
+
+        foreach (var friend in friends)
+        {
+            await hubContext.Clients.Group(friend).ReceiveOnlineAlert(username);
+        }
+        
+        return Ok();
+    }
         
     [HttpPost("accept-friend-request/{friendRequestId:int}")]
     public async Task<IActionResult> AcceptFriendRequest(int friendRequestId)

@@ -45,6 +45,10 @@ public class AuthService(
         var accessToken = tokenService.CreateAccessToken(user);
         var refreshToken = await tokenService.CreateRefreshToken(user);
 
+        user.IsOnline = true;
+
+        await userRepository.UpdateUser(user);
+        
         return new LoginResponseDto(accessToken, refreshToken, user.UserName, user.Role.ToString());
     }
 
