@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UniVerse.Core.Entities;
+using UniVerse.Core.Exceptions;
 using UniVerse.Core.Interfaces.IRepositories;
 using UniVerse.Infrastructure.Data;
 
@@ -43,7 +44,14 @@ public class UserRepository(
             .Where(p => usernames.Contains(p.UserName))
             .ToListAsync();
     }
-    
+
+    public async Task<List<User>> GetUsersByEnabled(bool enabled)
+    {
+        return await context.Users
+            .Where(u => u.IsEnabled == enabled)
+            .ToListAsync();
+    }
+
     public async Task<User?> GetUserByRefreshToken(string refreshToken)
     {
         return await context.Users
@@ -55,6 +63,11 @@ public class UserRepository(
         return await context.Users.AnyAsync(u => u.UserName == username);
     }
 
+    public async Task<bool> ExistsByEmail(string email)
+    {
+        return await context.Users.AnyAsync(u => u.Email == email);
+    }
+
     public async Task InsertUser(User user, string password)
     {
         user.PasswordHash = userManager.PasswordHasher.HashPassword(user, password);
@@ -64,5 +77,18 @@ public class UserRepository(
     public async Task UpdateUser(User user)
     {
         await userManager.UpdateAsync(user);
+    }
+
+    public async Task DeleteUser(string userId)
+    {
+        var user = await context.Users.FindAsync(userId);
+        
+        if (user is null)
+        {
+            throw new NotFoundException();
+        }
+        
+        context.Users.Remove(user);
+        await context.SaveChangesAsync();
     }
 }
