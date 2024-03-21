@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using UniVerse.Core;
 using UniVerse.Infrastructure;
+using UniVerse.Infrastructure.Hubs;
 using UniVerseBackend.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -89,5 +90,7 @@ app.UseAuthorization();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chats");
 
 app.Run();
