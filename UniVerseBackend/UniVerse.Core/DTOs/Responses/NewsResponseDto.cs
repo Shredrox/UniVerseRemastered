@@ -6,4 +6,4 @@ public record NewsResponseDto(
     string Content,
     byte[] Image,
     bool Pinned,
-    DateTime Date);
+    string Date);

@@ -14,7 +14,15 @@ public class NewsServices(INewsRepository newsRepository) : INewsService
         var news = await newsRepository.GetNews();
 
         var response = news
-            .Select(n => new NewsResponseDto(n.Id, n.Title, n.Content, n.ImageData, n.Pinned, n.Date))
+            .Select(n => new NewsResponseDto(
+                n.Id, 
+                n.Title, 
+                n.Content, 
+                n.ImageData, 
+                n.Pinned, 
+                n.Date.ToString("dd-MM-yyyy HH:mm")
+                )
+            )
             .ToList();
 
         return response;
@@ -28,7 +36,14 @@ public class NewsServices(INewsRepository newsRepository) : INewsService
             throw new NotFoundException();
         }
         
-        return new NewsResponseDto(news.Id, news.Title, news.Content, news.ImageData, news.Pinned, news.Date);
+        return new NewsResponseDto(
+            news.Id, 
+            news.Title, 
+            news.Content, 
+            news.ImageData, 
+            news.Pinned, 
+            news.Date.ToString("dd-MM-yyyy HH:mm")
+            );
     }
 
     public async Task<byte[]?> GetNewsImage(int newsId)
@@ -48,7 +63,7 @@ public class NewsServices(INewsRepository newsRepository) : INewsService
             Content = request.Content,
             Pinned = request.Pinned,
             ImageData = memoryStream.ToArray(),
-            Date = DateTime.Now
+            Date = DateTime.Now.ToUniversalTime()
         };
 
         await newsRepository.InsertNews(news);

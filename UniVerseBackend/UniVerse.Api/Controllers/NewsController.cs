@@ -36,14 +36,14 @@ public class NewsController(INewsService newsService) : ControllerBase
     }
     
     [HttpPost("create-news")]
-    public async Task<IActionResult> CreateNews([FromBody] CreateNewsRequestDto request)
+    public async Task<IActionResult> CreateNews([FromForm] CreateNewsRequestDto request)
     {
         await newsService.CreateNews(request);
         return Ok("News created.");
     }
     
     [HttpPost("update")]
-    public async Task<IActionResult> UpdateNews([FromBody] NewsEditRequestDto request)
+    public async Task<IActionResult> UpdateNews([FromForm] NewsEditRequestDto request)
     {
         await newsService.UpdateNews(request);
         return Ok("News updated.");
