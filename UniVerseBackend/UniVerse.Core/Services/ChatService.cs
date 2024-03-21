@@ -25,7 +25,12 @@ public class ChatService(
         var messages = await messageRepository.GetMessagesBySenderOrReceiver(user1, user2);
 
         var response = messages
-            .Select(m => new MessageResponseDto(m.Content, m.Sender.UserName, m.Receiver.UserName, m.Timestamp))
+            .Select(m => new MessageResponseDto(
+                m.Content, 
+                m.Sender.UserName,
+                m.Receiver.UserName, 
+                m.Timestamp.ToString("dd-MM-yyyy HH:mm"))
+            )
             .ToList();
 
         return response;
@@ -104,6 +109,7 @@ public class ChatService(
             message.Content, 
             message.Sender.UserName, 
             message.Receiver.UserName,
-            message.Timestamp);
+            message.Timestamp.ToString("dd-MM-yyyy HH:mm")
+            );
     }
 }
