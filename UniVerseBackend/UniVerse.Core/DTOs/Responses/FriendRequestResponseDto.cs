@@ -2,4 +2,4 @@
 
 public record FriendRequestResponseDto(
     int Id,
-    string SenderName);
+    string Sender);
