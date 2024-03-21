@@ -23,7 +23,7 @@ const SocialPanel = () => {
   } = useAlertsData(auth?.username);
 
   const unreadNotificationsCount = alertData.notifications
-  ? alertData.notifications.filter(notification => !notification.read).length
+  ? alertData.notifications.filter(notification => !notification.isRead).length
   : 0;
 
   const handleNotificationsOpen = () =>{
@@ -31,11 +31,11 @@ const SocialPanel = () => {
     setIsNotificationTabOn(!isNotificationTabOn);
   }
 
-  const handleAcceptFriendRequest = (friendshipId) =>{
+  const handleAcceptFriendRequest = (friendshipId : number) =>{
     acceptFriendRequestMutation(friendshipId);
   }
 
-  const handleRejectFriendRequest = (friendshipId) =>{
+  const handleRejectFriendRequest = (friendshipId : number) =>{
     rejectFriendRequestMutation(friendshipId);
   }
 
@@ -77,7 +77,7 @@ const SocialPanel = () => {
         <div className="notification-list">
           {alertData.friendRequests?.map((friendRequest, index) => 
           <div className="friend-request" key={index}>
-            {friendRequest.senderName}
+            {friendRequest.sender}
             <div className="friend-request-button-container">
               <button onClick={() => handleAcceptFriendRequest(friendRequest.id)} className="friend-request-accept-button">Accept</button>
               <button onClick={() => handleRejectFriendRequest(friendRequest.id)} className="friend-request-reject-button">Reject</button>
@@ -88,7 +88,7 @@ const SocialPanel = () => {
       </div>
       }
       
-      <div className='friends-container'>
+      {/* <div className='friends-container'>
         Online Friends
         <div className='friends-list'>
           {alertData.onlineFriends.length > 0 ?
@@ -98,7 +98,7 @@ const SocialPanel = () => {
           :
           <div>No Online Friends</div>}
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

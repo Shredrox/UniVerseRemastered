@@ -5,6 +5,7 @@ import axios from '../../axios/axios';
 import useAuth from '../../hooks/auth/useAuth';
 import ErrorFallback from '../fallback/ErrorFallback';
 import { z } from 'zod';
+import { useSocket } from '../../hooks/useSocket';
 
 const loginSchema = z.object({
   email: z.string().email().trim(),
@@ -15,6 +16,7 @@ type Inputs = z.infer<typeof loginSchema>
 
 const AccessForm = () => {
   const { setAuth } = useAuth();
+  const { createHubConnection } = useSocket();
 
   const {
     register, 
@@ -53,10 +55,10 @@ const AccessForm = () => {
       let url;
 
       if(activeButton === 'login'){
-        url = 'auth/login';
+        url = 'Auth/login';
       }
       else{
-        url = 'auth/register';
+        url = 'Auth/register';
       }
 
       const response = await axios.post(url,
@@ -72,6 +74,7 @@ const AccessForm = () => {
       const role = response?.data?.role;
 
       setAuth({username: user, accessToken: accessToken, role: role});
+      createHubConnection();
       navigate(from, { replace: true });
     }
     catch(error){

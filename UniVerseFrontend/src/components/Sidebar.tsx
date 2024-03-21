@@ -10,11 +10,13 @@ import SettingsIcon from '../assets/icons/icon-cog.svg'
 import useLogout from '../hooks/auth/useLogout';
 import { FaUserAstronaut } from "react-icons/fa";
 import useProfilePicture from '../hooks/query/useProfilePicture';
+import { useSocket } from '../hooks/useSocket';
 
 const Sidebar = () => {
   const location = useLocation();
   const { auth } = useAuth();
   const logout = useLogout();
+  const { disconnectFromHub } = useSocket();
 
   const navigate = useNavigate();
 
@@ -22,6 +24,7 @@ const Sidebar = () => {
 
   const handleLogout = async () => {
     await logout();
+    disconnectFromHub();
     navigate('/');
   }
 

@@ -6,6 +6,7 @@ import useAuth from '../../hooks/auth/useAuth'
 import Loading from '../../components/fallback/Loading'
 import ErrorFallback from '../../components/fallback/ErrorFallback'
 import PostInterface from "../../interfaces/post/PostInterface";
+import { useSocket } from "../../hooks/useSocket";
 
 interface CommentSectionProps{
   post: PostInterface;
@@ -13,6 +14,7 @@ interface CommentSectionProps{
 
 const CommentSection = ({post} : CommentSectionProps) => {
   const [commentText, setCommentText] = useState('');
+  const { sendNotification } = useSocket();
 
   const { auth } = useAuth();
 
@@ -29,9 +31,7 @@ const CommentSection = ({post} : CommentSectionProps) => {
   const {mutateAsync: addCommentMutation} = useMutation({
     mutationFn: addPostComment,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey:["postComments", post.id]
-      });
+      queryClient.invalidateQueries(["postComments", post.id]);
     },
   });
 
@@ -48,6 +48,14 @@ const CommentSection = ({post} : CommentSectionProps) => {
     }
 
     addCommentMutation({postId: post.id, username: auth?.username, content: commentText});
+    sendNotification(
+      { 
+        message: `${auth?.username} commented on your post: "${commentText}"`, 
+        type: "Comment", 
+        source: "Feed", 
+        recipientName: post.authorName
+      }
+    ); 
     setCommentText('');
   }
 

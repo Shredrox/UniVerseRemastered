@@ -7,10 +7,12 @@ import Loading from '../../components/fallback/Loading'
 import ErrorFallback from '../../components/fallback/ErrorFallback'
 import useProfilePicture from "../../hooks/query/useProfilePicture";
 import { FaUserAstronaut } from "react-icons/fa";
+import { useSocket } from "../../hooks/useSocket";
 
 const Comment = ({comment, isReply}) => {
   const [commentText, setCommentText] = useState('');
   const [replyOn, setReplyOn] = useState(false);
+  const { sendNotification } = useSocket();
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
@@ -28,9 +30,7 @@ const Comment = ({comment, isReply}) => {
   const {mutateAsync: addReplyMutation} = useMutation({
     mutationFn: addCommentReply,
     onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey:["commentReplies", comment.id]
-      });
+      queryClient.invalidateQueries(["commentReplies", comment.id]);
     },
   });
 
@@ -49,6 +49,14 @@ const Comment = ({comment, isReply}) => {
     }
 
     addReplyMutation({commentId: comment.id, username: auth?.username, content: commentText});
+    sendNotification(
+      { 
+        message: `${auth?.username} replied to your comment: "${commentText}"`, 
+        type: "Reply", 
+        source: "Feed", 
+        recipientName: comment.author
+      }
+    ); 
     setCommentText('')
     setReplyOn(false);
   }

@@ -12,6 +12,7 @@ import ErrorFallback from '../fallback/ErrorFallback';
 import Loading from '../fallback/Loading';
 import useProfilePicture from '../../hooks/query/useProfilePicture';
 import PostInterface from '../../interfaces/post/PostInterface';
+import { useSocket } from '../../hooks/useSocket';
 
 interface PostProps{
   post: PostInterface;
@@ -22,6 +23,7 @@ const Post = ({post} : PostProps) => {
 
   const navigate = useNavigate();
   const { auth } = useAuth();
+  const { sendNotification } = useSocket();
 
   const { 
     postData, 
@@ -37,6 +39,14 @@ const Post = ({post} : PostProps) => {
 
   const handleLike = () => {
     likePostMutation({postId: post.id, username: auth?.username});
+    sendNotification(
+      { 
+        message: `${auth?.username} liked your post!`, 
+        type: "Like", 
+        source: "Feed", 
+        recipientName: post.authorName 
+      }
+    );
   }
 
   const handleUnike = () => {

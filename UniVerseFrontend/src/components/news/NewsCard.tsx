@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import PinnedIcon from '../assets/icons/icon-pinned.svg'
+import PinnedIcon from '../../assets/icons/icon-pinned.svg'
 import useNewsImage from '../../hooks/query/useNewsImage';
 import NewsInterface from '../../interfaces/NewsInterface';
 
