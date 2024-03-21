@@ -3,98 +3,98 @@ import PostType from "../interfaces/post/PostInterface";
 
 //posts--------------------------
 export const getAllPosts = async () =>{
-  const response = await axios.get(`/posts`);
+  const response = await axios.get(`Post`);
   return response.data;
 }
 
 export const getFriendsPosts = async (username : string) =>{
-  const response = await axios.get(`/posts/getFriendsPosts/${username}`);
+  const response = await axios.get(`Post/get-friends-posts/${username}`);
   return response.data;
 }
 
 export const getUserPostsCount = async (username : string) =>{
-  const response = await axios.get(`/posts/user/${username}/count`);
+  const response = await axios.get(`Post/user/${username}/count`);
   return response.data;
 }
 
 export const getPostById = async (postId : number) =>{
-  const response = await axios.get(`/posts/${postId}`);
+  const response = await axios.get(`Post/${postId}`);
   return response.data;
 }
 
 export const getPostImage = async (id : number) =>{
-  const response = await axios.get(`/posts/${id}/image`, { responseType: 'blob'});
+  const response = await axios.get(`Post/${id}/image`, { responseType: 'blob'});
   return response.data;
 }
 
 export const addPost = async (post : number) =>{
-  return await axios.post('/posts/createPost', post, { responseType: 'blob'});
+  return await axios.post('Post', post, { responseType: 'blob'});
 }
 
 export const updatePost = async (post : PostType) =>{
-  return await axios.put(`/posts/${post.id}`, post);
+  return await axios.put(`Post/${post.id}`, post);
 }
 
 export const deletePost = async (postId : number) =>{
-  return await axios.delete(`/posts/${postId}`);
+  return await axios.delete(`Post/${postId}`);
 }
 
 //comments-----------------------
 export const getPostComments = async (postId : number) =>{
-  const response = await axios.get(`/comments/${postId}/getComments`);
+  const response = await axios.get(`Comment/${postId}/comments`);
   return response.data;
 }
 
 export const getCommentReplies = async (commentId : number) =>{
-  const response = await axios.get(`/comments/${commentId}/replies`);
+  const response = await axios.get(`Comment/${commentId}/replies`);
   return response.data;
 }
 
 export const getPostCommentCount = async (postId : number) =>{
-  const response = await axios.get(`/comments/${postId}/getCommentsCount`);
+  const response = await axios.get(`Comment/${postId}/comments/count`);
   return response.data;
 }
 
 export const addPostComment = async ({postId, username, content}) =>{
   const commentRequest = {
-      postId: postId,
-      username: username,
-      content: content
+    postId: postId,
+    username: username,
+    content: content
   }
 
-  const response = await axios.post(`/comments/addComment`, commentRequest);
+  const response = await axios.post(`Comment/add-comment`, commentRequest);
   return response.data;
 }
 
 export const addCommentReply = async ({commentId, username, content}) => {
   const commentRequest = {
-      postId: "",
-      username: username,
-      content: content
+    postId: -1,
+    username: username,
+    content: content
   }
 
-  const response = await axios.post(`/comments/${commentId}/addReply`, commentRequest);
+  const response = await axios.post(`Comment/${commentId}/add-reply`, commentRequest);
   return response.data;
 }
 
 //likes--------------------------
 export const getPostLikes = async (postId : number) =>{
-  const response = await axios.get(`/likes/post/${postId}/getLikes`);
+  const response = await axios.get(`Like/post/${postId}/getLikes`);
   return response.data;
 }
 
 export const getIsLiked = async (postId : number, username : string) =>{
-  const response = await axios.get(`/likes/post/${postId}/likedBy/${username}`);
+  const response = await axios.get(`Like/post/${postId}/likedBy/${username}`);
   return response.data;
 }
 
 export const likePost = async (like) =>{
-  const response = await axios.post(`/likes/post/like`, like);
+  const response = await axios.post(`Like/post/like`, like);
   return response.data;
 }
 
 export const unlikePost = async ({postId, username}) =>{
-  const response = await axios.delete(`/likes/post/${postId}/unlike`, {
+  const response = await axios.delete(`Like/post/${postId}/unlike`, {
     params: {
       username
     }
