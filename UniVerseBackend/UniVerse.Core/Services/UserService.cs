@@ -40,13 +40,7 @@ public class UserService(
     public async Task<User?> GetUserFromRefreshToken(string refreshToken)
     {
         var user = await userRepository.GetUserByRefreshToken(refreshToken);
-
-        if (user is null)
-        {
-            return null;
-        }
-        
-        return await userRepository.GetUserById(user.Id);
+        return user ?? null;
     }
 
     public async Task<byte[]?> GetUserProfilePicture(string username)
