@@ -2328,6 +2328,50 @@ border-radius: 50%;
   box-shadow: 0 0 15px #8763D2;
 }
 
+.admin-nav-button-container{
+  width: 100%;
+}
+
+.admin-page{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.registration-requests-list{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #03254C;
+  width: 60%;
+  height: 700px;
+  padding: 1rem;
+  border-radius: 1rem;
+  overflow-y: scroll;
+  overflow: auto;
+  scrollbar-color: #8763D2 #001A33;
+  scrollbar-width: thin;
+}
+
+.user-registration-request{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: #001a33;
+  padding: 1rem;
+  height: 120px;
+  border-radius: 0.5rem;
+}
+
+.user-registration-request-info{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 @media (max-width: 1500px){
   .feed{
       width: 80%;
