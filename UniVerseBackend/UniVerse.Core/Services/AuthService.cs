@@ -4,6 +4,7 @@ using UniVerse.Core.DTOs.Requests;
 using UniVerse.Core.DTOs.Responses;
 using UniVerse.Core.Entities;
 using UniVerse.Core.Enums;
+using UniVerse.Core.Exceptions;
 using UniVerse.Core.Interfaces.IRepositories;
 using UniVerse.Core.Interfaces.IServices;
 
@@ -26,7 +27,7 @@ public class AuthService(
             UserName = request.Username,
             Email = request.Email,
             Role = UserRole.User,
-            IsEnabled = true,
+            IsEnabled = false,
             IsOnline = false
         };
 
@@ -49,7 +50,7 @@ public class AuthService(
 
         await userRepository.UpdateUser(user);
         
-        return new LoginResponseDto(accessToken, refreshToken, user.UserName, user.Role.ToString());
+        return new LoginResponseDto(accessToken, refreshToken, user.UserName, user.Role.ToString().ToUpper());
     }
 
     public async Task<bool> CheckPassword(string username, string password)
@@ -62,6 +63,18 @@ public class AuthService(
         }
         
         return passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password) is PasswordVerificationResult.Success;
+    }
+
+    public async Task<bool> CheckIsEnabled(string email)
+    {
+        var user = await userRepository.GetUserByEmail(email);
+        
+        if (user is null)
+        {
+            throw new NotFoundException();
+        }
+
+        return user.IsEnabled;
     }
 
     private bool VerifyPassword(User user, string password)

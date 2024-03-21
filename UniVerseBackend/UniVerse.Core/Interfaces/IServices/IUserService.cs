@@ -13,6 +13,10 @@ public interface IUserService
     Task<User?> GetUserFromRefreshToken(string refreshToken);
     Task<byte[]?> GetUserProfilePicture(string username);
     Task<bool> ExistsByUsername(string username);
+    Task<bool> ExistsByEmail(string email);
     Task UpdateUserRefreshToken(User user);
     Task<bool> UpdateUserProfile(UpdateProfileRequestDto request);
+    Task<List<UserResponseDto>> GetUserRegistrationRequests();
+    Task ApproveUser(string username);
+    Task RejectUser(string username);
 }

@@ -2,6 +2,7 @@
 using UniVerse.Core.DTOs.Requests;
 using UniVerse.Core.DTOs.Responses;
 using UniVerse.Core.Entities;
+using UniVerse.Core.Exceptions;
 using UniVerse.Core.Interfaces.IRepositories;
 using UniVerse.Core.Interfaces.IServices;
 
@@ -54,6 +55,11 @@ public class UserService(
         return await userRepository.ExistsByUsername(username);
     }
 
+    public async Task<bool> ExistsByEmail(string email)
+    {
+        return await userRepository.ExistsByEmail(email);
+    }
+
     public async Task UpdateUserRefreshToken(User user)
     {
         var existingUser = await userRepository.GetUserById(user.Id);
@@ -100,5 +106,42 @@ public class UserService(
         await userRepository.UpdateUser(user);
 
         return true;
+    }
+    
+    public async Task<List<UserResponseDto>>  GetUserRegistrationRequests()
+    {
+        var users = await userRepository.GetUsersByEnabled(false);
+
+        var response = users
+            .Select(u => new UserResponseDto(u.UserName, u.Email))
+            .ToList();
+
+        return response;
+    }
+
+    public async Task ApproveUser(string username)
+    {
+        var user = await userRepository.GetUserByUsername(username);
+
+        if (user is null)
+        {
+            throw new NotFoundException();
+        }
+
+        user.IsEnabled = true;
+
+        await userRepository.UpdateUser(user);
+    }
+
+    public async Task RejectUser(string username)
+    {
+        var user = await userRepository.GetUserByUsername(username);
+
+        if (user is null)
+        {
+            throw new NotFoundException();
+        }
+        
+        await userRepository.DeleteUser(user.Id);
     }
 }

@@ -55,7 +55,7 @@ public class UserController(
             
         return File(imageBytes, "image/jpeg");
     }
-        
+    
     [HttpPost("update-profile")]
     public async Task<IActionResult> UpdateUserProfile([FromForm] UpdateProfileRequestDto request)
     {
@@ -67,5 +67,28 @@ public class UserController(
         }
 
         return Ok("Profile updated.");
+    }
+
+    [Authorize(Roles = "Admin")]
+    [HttpGet("registration-requests")]
+    public async Task<IActionResult> GetUserRegistrationRequests()
+    {
+        return Ok(await userService.GetUserRegistrationRequests());
+    }
+    
+    [Authorize(Roles = "Admin")]
+    [HttpPut("{username}/approve")]
+    public async Task<IActionResult> ApproveUser(string username)
+    {
+        await userService.ApproveUser(username);
+        return Ok("User approved");
+    }
+    
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("{username}/reject")]
+    public async Task<IActionResult> RejectUser(string username)
+    {
+        await userService.RejectUser(username);
+        return Ok("User rejected");
     }
 }

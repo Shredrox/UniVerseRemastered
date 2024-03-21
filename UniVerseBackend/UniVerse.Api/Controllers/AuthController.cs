@@ -26,6 +26,15 @@ public class AuthController(
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
     {
+        if (await userService.ExistsByEmail(request.Email) is false)
+        {
+            return NotFound();
+        }
+        if (await authService.CheckIsEnabled(request.Email) is false)
+        {
+            return StatusCode(423, "Account not approved");
+        }
+        
         var (accessToken, refreshToken, username, role) = await authService.Login(request);
 
         Response.Cookies.Append("AccessToken", accessToken, new CookieOptions
@@ -113,7 +122,7 @@ public class AuthController(
         var username = user.UserName;
         var newAccessToken = tokenService.CreateAccessToken(user);
         var newRefreshToken = await tokenService.CreateRefreshToken(user);
-        var role = user.Role;
+        var role = user.Role.ToString().ToUpper();
 
         Response.Cookies.Append("AccessToken", newAccessToken, new CookieOptions
         {

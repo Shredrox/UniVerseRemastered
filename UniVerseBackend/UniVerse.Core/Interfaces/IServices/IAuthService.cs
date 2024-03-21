@@ -8,4 +8,5 @@ public interface IAuthService
     Task Register(RegisterRequestDto request);
     Task<LoginResponseDto> Login(LoginRequestDto request);
     Task<bool> CheckPassword(string username, string password);
+    Task<bool> CheckIsEnabled(string email);
 }
