@@ -100,6 +100,7 @@ public class AuthController(
         var username = user.UserName;
         var newAccessToken = tokenService.CreateAccessToken(user);
         var newRefreshToken = await tokenService.CreateRefreshToken(user);
+        var role = user.Role;
 
         Response.Cookies.Append("AccessToken", newAccessToken, new CookieOptions
         {
@@ -121,6 +122,6 @@ public class AuthController(
             SameSite = SameSiteMode.None
         });
             
-        return Ok(new { newAccessToken, username });
+        return Ok(new { newAccessToken, username, role });
     }
 }

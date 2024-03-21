@@ -50,7 +50,7 @@ public class UserController(
 
         if (imageBytes is null)
         {
-            return NotFound();
+            return File(Array.Empty<byte>(), "image/jpeg");
         }
             
         return File(imageBytes, "image/jpeg");

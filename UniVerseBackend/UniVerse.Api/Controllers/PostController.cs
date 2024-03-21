@@ -25,7 +25,7 @@ public class PostController(
         return Ok(posts.Count);
     }
         
-    [HttpGet("/get-friends-posts/{username}")]
+    [HttpGet("get-friends-posts/{username}")]
     public async Task<IActionResult> GetFriendsPosts(string username)
     {
         var friends = await friendshipService.GetFriendsUsernames(username); 

@@ -34,9 +34,9 @@ public class FriendshipController(IFriendshipService friendshipService) : Contro
     }
 
     [HttpGet("check-friendship")]
-    public async Task<IActionResult> CheckFriendship([FromQuery] string user1name, [FromQuery] string user2Name)
+    public async Task<IActionResult> CheckFriendship([FromQuery] string user1Name, [FromQuery] string user2Name)
     {
-        return Ok(await friendshipService.CheckUsersFriendship(user1name, user2Name));
+        return Ok(await friendshipService.CheckUsersFriendship(user1Name, user2Name));
     }
         
     //TODO: Implement socket/signalR endpoints for friend requests
