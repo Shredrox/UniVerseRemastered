@@ -8,4 +8,5 @@ public interface IChatClient
     Task ReceiveMessage(MessageResponseDto message);
     Task ChatCreated(ChatResponseDto chat);
     Task ReceiveNotification(NotificationResponseDto notification);
+    Task ReceiveFriendRequest(FriendRequestResponseDto friendRequest);
 }
