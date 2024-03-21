@@ -18,6 +18,7 @@ public static class ServiceExtensions
         services.AddScoped<IJobService, JobService>();
         services.AddScoped<IGroupEventService, GroupEventService>();
         services.AddScoped<IChatService, ChatService>();
+        services.AddScoped<INotificationService, NotificationService>();
         
         return services;
     }

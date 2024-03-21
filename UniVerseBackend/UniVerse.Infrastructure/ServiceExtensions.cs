@@ -37,6 +37,7 @@ public static class ServiceExtensions
         services.AddScoped<IChatRepository, ChatRepository>();
         services.AddScoped<IEmployerRepository, EmployerRepository>();
         services.AddScoped<IOrganiserRepository, OrganiserRepository>();
+        services.AddScoped<INotificationRepository, NotificationRepository>();
 
         services.AddSignalR();
         
