@@ -19,7 +19,7 @@ public class AuthService(
     {
         if (await userRepository.GetUserByUsername(request.Username) is not null)
         {
-            throw new ArgumentException("Username already taken");
+            throw new UserAlreadyExistsException("Username already taken");
         }
         
         var user = new User

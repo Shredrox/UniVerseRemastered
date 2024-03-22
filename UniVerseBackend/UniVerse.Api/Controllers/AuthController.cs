@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using UniVerse.Core.DTOs.Requests;
+using UniVerse.Core.Exceptions;
 using UniVerse.Core.Interfaces.IClients;
 using UniVerse.Core.Interfaces.IServices;
 using UniVerse.Infrastructure.Hubs;
@@ -19,8 +20,16 @@ public class AuthController(
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequestDto request)
     {
-        await authService.Register(request);
-        return Ok("User Registered");
+        try
+        {
+            await authService.Register(request);
+            return Ok("User Registered");
+        }
+        catch (UserAlreadyExistsException e)
+        {
+            Console.WriteLine(e);
+            return Conflict();
+        }
     }
 
     [HttpPost("login")]
