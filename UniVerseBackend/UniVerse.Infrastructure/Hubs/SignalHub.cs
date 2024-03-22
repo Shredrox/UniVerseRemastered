@@ -5,7 +5,7 @@ using UniVerse.Core.Interfaces.IClients;
 namespace UniVerse.Infrastructure.Hubs;
 
 [Authorize]
-public class ChatHub : Hub<IChatClient>
+public class SignalHub : Hub<ISignalClient>
 {
     public override async Task OnConnectedAsync()
     {

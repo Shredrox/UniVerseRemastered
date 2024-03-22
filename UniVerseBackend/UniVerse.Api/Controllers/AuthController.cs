@@ -10,7 +10,7 @@ namespace UniVerseBackend.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class AuthController(
-    IHubContext<ChatHub, IChatClient> hubContext,
+    IHubContext<SignalHub, ISignalClient> hubContext,
     IAuthService authService,
     IUserService userService,
     ITokenService tokenService,

@@ -91,6 +91,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapHub<ChatHub>("/chats");
+app.MapHub<SignalHub>("/signal-hub");
 
 app.Run();

@@ -3,7 +3,7 @@ using UniVerse.Core.Entities;
 
 namespace UniVerse.Core.Interfaces.IClients;
 
-public interface IChatClient
+public interface ISignalClient
 {   
     Task ReceiveMessage(MessageResponseDto message);
     Task ChatCreated(ChatResponseDto chat);

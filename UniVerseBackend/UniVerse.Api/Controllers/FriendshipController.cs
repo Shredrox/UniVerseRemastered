@@ -12,7 +12,7 @@ namespace UniVerseBackend.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class FriendshipController(
-    IHubContext<ChatHub, IChatClient> hubContext,
+    IHubContext<SignalHub, ISignalClient> hubContext,
     IFriendshipService friendshipService) : ControllerBase
 {
     [HttpGet("{username}/online-friends")]

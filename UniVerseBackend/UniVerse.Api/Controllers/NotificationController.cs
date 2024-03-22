@@ -10,7 +10,7 @@ namespace UniVerseBackend.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class NotificationController(
-    IHubContext<ChatHub, IChatClient> hubContext,
+    IHubContext<SignalHub, ISignalClient> hubContext,
     INotificationService notificationService) : ControllerBase
 {
     [HttpGet("{username}")]

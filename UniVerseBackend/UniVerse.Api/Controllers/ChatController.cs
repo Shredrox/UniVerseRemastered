@@ -10,7 +10,7 @@ namespace UniVerseBackend.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class ChatController(
-    IHubContext<ChatHub, IChatClient> hubContext,
+    IHubContext<SignalHub, ISignalClient> hubContext,
     IChatService chatService) : ControllerBase
 {
     [HttpGet("get-messages")]
