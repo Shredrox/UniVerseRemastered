@@ -35,6 +35,7 @@ public class NewsController(INewsService newsService) : ControllerBase
         return File(imageData, "image/jpeg");
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpPost("create-news")]
     public async Task<IActionResult> CreateNews([FromForm] CreateNewsRequestDto request)
     {
@@ -42,6 +43,7 @@ public class NewsController(INewsService newsService) : ControllerBase
         return Ok("News created.");
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpPost("update")]
     public async Task<IActionResult> UpdateNews([FromForm] NewsEditRequestDto request)
     {
@@ -49,6 +51,7 @@ public class NewsController(INewsService newsService) : ControllerBase
         return Ok("News updated.");
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpDelete("delete/{newsId:int}")]
     public async Task<IActionResult> DeleteNews(int newsId)
     {

@@ -28,6 +28,7 @@ public class JobController(IJobService jobService) : ControllerBase
         return Ok(await jobService.IsAppliedToJob(jobId, username));
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpPost("create-job")]
     public async Task<IActionResult> CreateJob([FromBody] CreateJobOfferRequestDto request)
     {
@@ -49,6 +50,7 @@ public class JobController(IJobService jobService) : ControllerBase
         return Ok("Application to job offer canceled.");
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpPut("{jobId:int}")]
     public async Task<IActionResult> UpdateJob(int jobId, [FromBody] UpdateJobOfferRequestDto request)
     {
@@ -56,6 +58,7 @@ public class JobController(IJobService jobService) : ControllerBase
         return Ok("Job offer updated.");
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{jobId:int}")]
     public async Task<IActionResult> DeleteJob(int jobId)
     {

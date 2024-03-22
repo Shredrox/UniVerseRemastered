@@ -34,6 +34,7 @@ public class GroupEventController(IGroupEventService groupEventService) : Contro
         return Ok(await groupEventService.IsAttending(groupEventId, username));
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpPost("create-group-event")]
     public async Task<IActionResult> CreateGroupEvent([FromBody] CreateGroupEventRequestDto request)
     {
@@ -55,6 +56,7 @@ public class GroupEventController(IGroupEventService groupEventService) : Contro
         return Ok("Attending group event removed.");
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpPut("{groupEventId:int}")]
     public async Task<IActionResult> UpdateGroupEvent(int groupEventId, [FromBody] UpdateGroupEventRequestDto request)
     {
@@ -62,6 +64,7 @@ public class GroupEventController(IGroupEventService groupEventService) : Contro
         return Ok("Group event updated.");
     }
     
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{groupEventId:int}")]
     public async Task<IActionResult> DeleteGroupEvent(int groupEventId)
     {
