@@ -92,6 +92,9 @@ const AccessForm = () => {
       }else if(error.response?.status === 404){
         setError('Account not found');
         setIsError(true);
+      }else if(error.response?.status === 409){
+        setError('User already exists');
+        setIsError(true);
       }else{
         setError('Error');
         setIsError(true);
