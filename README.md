@@ -26,6 +26,10 @@ UniVerse is a university social platform designed to enhance the academic and so
   
 ![home](/Screenshots/home.jpg)
 
+Like, comment and reply to comments on posts.
+  
+![comments](/Screenshots/comments.jpg)
+
 - **Profile**: Customize your profile with personal information and a profile picture.
   
 ![profile](/Screenshots/profile.jpg)
