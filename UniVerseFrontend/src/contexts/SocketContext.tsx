@@ -27,7 +27,7 @@ export const SocketProvider = ({ children } : SocketProviderProps) => {
 
   const createHubConnection = () =>{
     const newConnection = new HubConnectionBuilder()
-      .withUrl("http://localhost:5135/chats")
+      .withUrl("http://localhost:5135/signal-hub")
       .withAutomaticReconnect()
       .build();
 
