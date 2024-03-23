@@ -1,4 +1,4 @@
-# 🌌 UniVerse
+<h1 align="center">🌌 UniVerse</h1>
 UniVerse is a university social platform designed to enhance the academic and social experience for both students and faculty members. It provides a comprehensive set of features tailored to the needs of the university community, fostering collaboration, communication, and engagement.
 
 ![landing](/Screenshots/landing.jpg)
