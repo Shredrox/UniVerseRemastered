@@ -20,7 +20,9 @@ const useMessagesData = (loggedUser : string, chatUser: string) =>{
   const {mutateAsync: sendMessageMutation} = useMutation({
     mutationFn: sendMessage,
     onSuccess: () =>{
-      queryClient.invalidateQueries(["chat", loggedUser, chatUser]);
+      queryClient.invalidateQueries({
+        queryKey: ["chat", loggedUser, chatUser]
+      });
     },
   });
 

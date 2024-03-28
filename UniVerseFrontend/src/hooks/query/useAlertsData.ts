@@ -69,21 +69,27 @@ const useAlertsData = (loggedUser : string) =>{
   const {mutateAsync: readNotificationsMutation} = useMutation({
     mutationFn: readUserNotifications,
     onSuccess: () =>{
-      queryClient.invalidateQueries(["userNotifications", loggedUser]);
+      queryClient.invalidateQueries({
+        queryKey: ["userNotifications", loggedUser]
+      });
     },
   });
 
   const {mutateAsync: acceptFriendRequestMutation} = useMutation({
     mutationFn: acceptFriendRequest,
     onSuccess: () =>{
-      queryClient.invalidateQueries(["friendRequests", loggedUser]);
+      queryClient.invalidateQueries({
+        queryKey: ["friendRequests", loggedUser]
+      });
     },
   });
 
   const {mutateAsync: rejectFriendRequestMutation} = useMutation({
     mutationFn: rejectFriendRequest,
     onSuccess: () =>{
-      queryClient.invalidateQueries(["friendRequests", loggedUser]);
+      queryClient.invalidateQueries({
+        queryKey: ["friendRequests", loggedUser]
+      });
     },
   });
 

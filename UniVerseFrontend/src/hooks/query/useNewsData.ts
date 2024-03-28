@@ -16,14 +16,18 @@ const useNewsData = (newsId : number) =>{
   const {mutateAsync: updateNewsMutation} = useMutation({
     mutationFn: updateNews,
     onSuccess: () =>{
-      queryClient.invalidateQueries(["newsDetails", newsId]);
+      queryClient.invalidateQueries({
+        queryKey: ["newsDetails", newsId]
+      });
     },
   });
 
   const {mutateAsync: deleteNewsMutation} = useMutation({
     mutationFn: deleteNews,
     onSuccess: () =>{
-      queryClient.invalidateQueries(["news"]);
+      queryClient.invalidateQueries({
+        queryKey: ["news"]
+      });
     },
   });
 

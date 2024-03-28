@@ -13,20 +13,30 @@ const useNewsListData = () =>{
     queryFn: () => getNews(),
   });
 
-  const news = newsData?.sort((a, b) => {
+  const news = newsData?.sort((a : any, b : any) => {
     if (a.pinned !== b.pinned) {
       return a.pinned ? -1 : 1;
     } else {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
-      return dateB - dateA;
+      const [aday, amonth, ayearAndTime] = a.date.split('-');
+      const [ayear, atime] = ayearAndTime.split(' ');
+      const [ahour, aminute] = atime.split(':');
+      const dateA = new Date(ayear, amonth - 1, aday, ahour, aminute);
+
+      const [bday, bmonth, byearAndTime] = b.date.split('-');
+      const [byear, btime] = byearAndTime.split(' ');
+      const [bhour, bminute] = btime.split(':');
+      const dateB = new Date(byear, bmonth - 1, bday, bhour, bminute);
+
+      return dateB.getTime() - dateA.getTime();
     }
   });
 
   const {mutateAsync: addNewsMutation} = useMutation({
     mutationFn: addNews,
     onSuccess: () =>{
-      queryClient.invalidateQueries(["news"]);
+      queryClient.invalidateQueries({
+        queryKey: ["news"]
+      });
     },
   });
 

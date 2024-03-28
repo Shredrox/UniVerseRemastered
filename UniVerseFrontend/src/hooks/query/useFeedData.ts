@@ -7,10 +7,14 @@ const useFeedData = (user : string, userRole : string) => {
   const fetchAndSortPosts = async () => {
     try {
       const data = userRole === "ADMIN" ? await getAllPosts() : await getFriendsPosts(user) ;
-      const sortedPosts = data.slice().sort((a, b) => {
-        const dateA = new Date(a.timestamp).getTime();
-        const dateB = new Date(b.timestamp).getTime();
-        return dateB - dateA;
+      const sortedPosts = data.slice().sort((a : any, b : any) => {
+        const [adayA, amonthA, ayearA, atimeA] = a.timestamp.split(/[-\s:]/);
+        const [adayB, amonthB, ayearB, atimeB] = b.timestamp.split(/[-\s:]/);
+        
+        const dateA = new Date(ayearA, amonthA - 1, adayA, atimeA[0], atimeA[1]);
+        const dateB = new Date(ayearB, amonthB - 1, adayB, atimeB[0], atimeB[1]);
+        
+        return dateB.getTime() - dateA.getTime();
       });
       return sortedPosts;
     } catch (error) {
@@ -30,7 +34,9 @@ const useFeedData = (user : string, userRole : string) => {
   const {mutateAsync: addPostMutation} = useMutation({
     mutationFn: addPost,
     onSuccess: () =>{
-      queryClient.invalidateQueries(["posts"]);
+      queryClient.invalidateQueries({
+        queryKey: ["posts"]
+      });
     },
   });
 
