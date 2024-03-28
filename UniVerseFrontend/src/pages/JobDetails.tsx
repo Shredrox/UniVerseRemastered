@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import useAuth from "../hooks/auth/useAuth";
 import { IoBriefcase } from "react-icons/io5";
-import { FaLocationDot } from "react-icons/fa6";
+import { FaLocationDot, FaMoneyBills } from "react-icons/fa6";
 import { HiBuildingOffice2 } from "react-icons/hi2";
 import Loading from '../components/fallback/Loading'
 import useJobData from "../hooks/query/useJobData";
@@ -53,6 +53,7 @@ const JobDetails = () => {
         <span className="job-text-field"><HiBuildingOffice2 className="job-icon"/>{jobData.job?.requirements}</span>
         <span className="job-text-field"><FaLocationDot className="job-icon"/>{jobData.job?.location}</span>
         <span className="job-text-field"><IoBriefcase className="job-icon"/>{jobData.job?.type}</span>
+        <span className="job-text-field"><FaMoneyBills className="job-icon"/>{jobData.job?.salary}</span>
         <p className="job-description">{jobData.job?.description}</p>
         <button 
         onClick={handleApply} 

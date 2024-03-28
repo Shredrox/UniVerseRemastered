@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getJobs } from '../services/jobService';
 import JobsIcon from '../assets/icons/icon-job.svg';
-import SearchIcon from '../assets/icons/icon-search-outline.svg'
 import JobOffer from '../components/job/JobOffer';
 import JobFilter from '../components/job/JobFilter';
 import Loading from '../components/fallback/Loading'
@@ -38,21 +37,25 @@ const Jobs = () => {
   };
 
   const clearFilters = () =>{
-    setSelectedFilters('');
+    setSelectedFilters({});
     setJobType('Job Type');
     setJobLevel('Experience Level');
     setJobLocation('Location');
     setJobSalary('Salary');
   }
 
-  const filteredJobOffers = jobOffers?.filter(item => {
-    return Object.keys(selectedFilters).every(filterType => {
-      if (selectedFilters[filterType] === '') {
-        return true; 
-      }
-      return item[filterType] === selectedFilters[filterType];
+  const filteredJobOffers = useMemo(() => {
+    if (!jobOffers) return [];
+    
+    return jobOffers.filter(item => {
+      return Object.keys(selectedFilters).every(filterType => {
+        if (selectedFilters[filterType] === '') {
+          return true; 
+        }
+        return item[filterType] === selectedFilters[filterType];
+      });
     });
-  });
+  }, [jobOffers, selectedFilters]);
 
   if(isError){
     throw Error(error);
@@ -124,8 +127,6 @@ const Jobs = () => {
           />
           <button onClick={() => clearFilters()} className='confirm-button'>Clear Filters</button>
         </div>
-
-        <img src={SearchIcon}/>
       </div>
       <div className="job-list-container">
         <h2><img src={JobsIcon} alt="JobsIcon" /> Job Results:</h2>
