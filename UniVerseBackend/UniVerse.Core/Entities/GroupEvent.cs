@@ -1,4 +1,6 @@
-﻿namespace UniVerse.Core.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace UniVerse.Core.Entities;
 
 public class GroupEvent
 {
@@ -8,10 +10,11 @@ public class GroupEvent
     public int OrganiserId { get; set; }
     public Organiser Organiser { get; set; }
     public DateTime Date { get; set; }
+    [JsonIgnore]
     public ICollection<User> Attendees { get; set; }
 
     public GroupEvent()
     {
-        Attendees = new List<User>();
+        Attendees = new HashSet<User>();
     }
 }

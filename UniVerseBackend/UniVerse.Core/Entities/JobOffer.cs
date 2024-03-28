@@ -1,4 +1,6 @@
-﻿namespace UniVerse.Core.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace UniVerse.Core.Entities;
 
 public class JobOffer
 {
@@ -11,10 +13,11 @@ public class JobOffer
     public string Salary { get; set; }
     public int EmployerId { get; set; }
     public Employer Employer { get; set; }
+    [JsonIgnore]
     public ICollection<User> Applicants { get; set; }
 
     public JobOffer()
     {
-        Applicants = new List<User>();
+        Applicants = new HashSet<User>();
     }
 }
