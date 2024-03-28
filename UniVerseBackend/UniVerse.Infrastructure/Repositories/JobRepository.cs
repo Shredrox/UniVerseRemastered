@@ -15,7 +15,9 @@ public class JobRepository(UniVerseDbContext context) : IJobRepository
 
     public async Task<JobOffer?> GetJobOfferById(int id)
     {
-        return await context.JobOffers.FindAsync(id);
+        return await context.JobOffers
+            .Include(j => j.Applicants)
+            .FirstOrDefaultAsync(j => j.Id == id);
     }
 
     public async Task<List<JobOffer>> GetJobOfferByTitle(string title)
