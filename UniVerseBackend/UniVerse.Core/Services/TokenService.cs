@@ -43,7 +43,7 @@ public class TokenService(
         var refreshToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
         
         user.RefreshToken = refreshToken;
-        user.RefreshTokenValidity = DateTime.Now.AddHours(2).ToUniversalTime(); 
+        user.RefreshTokenValidity = DateTime.Now.AddHours(24).ToUniversalTime(); 
         
         await userRepository.UpdateUser(user);
         

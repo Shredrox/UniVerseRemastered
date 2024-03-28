@@ -60,7 +60,7 @@ public class AuthController(
         {
             HttpOnly = true,
             Secure = true,
-            Expires = DateTime.UtcNow.AddHours(1),
+            Expires = DateTime.UtcNow.AddHours(24),
             Domain = "localhost",
             IsEssential = true,
             SameSite = SameSiteMode.None
@@ -147,7 +147,7 @@ public class AuthController(
         {
             HttpOnly = true,
             Secure = true,
-            Expires = DateTime.UtcNow.AddHours(1),
+            Expires = DateTime.UtcNow.AddHours(24),
             Domain = "localhost",
             IsEssential = true,
             SameSite = SameSiteMode.None
