@@ -1,4 +1,5 @@
 import axios from "../axios/axios";
+import Comment from "../interfaces/Comment";
 import PostType from "../interfaces/post/PostInterface";
 
 //posts--------------------------
@@ -40,12 +41,12 @@ export const deletePost = async (postId : number) =>{
 }
 
 //comments-----------------------
-export const getPostComments = async (postId : number) =>{
+export const getPostComments = async (postId : number) : Promise<Comment[]> =>{
   const response = await axios.get(`Comment/${postId}/comments`);
   return response.data;
 }
 
-export const getCommentReplies = async (commentId : number) =>{
+export const getCommentReplies = async (commentId : number) : Promise<Comment[]>  =>{
   const response = await axios.get(`Comment/${commentId}/replies`);
   return response.data;
 }

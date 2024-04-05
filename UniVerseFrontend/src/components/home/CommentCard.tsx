@@ -1,19 +1,23 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { addCommentReply, getCommentReplies } from "../../services/postService";
 import useAuth from '../../hooks/auth/useAuth'
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Loading from '../../components/fallback/Loading'
-import ErrorFallback from '../../components/fallback/ErrorFallback'
+import Loading from '../fallback/Loading'
+import ErrorFallback from '../fallback/ErrorFallback'
 import useProfilePicture from "../../hooks/query/useProfilePicture";
 import { FaUserAstronaut } from "react-icons/fa";
 import { useSocket } from "../../hooks/useSocket";
+import Comment from "../../interfaces/Comment";
+import useCommentData from "../../hooks/query/useCommentData";
 
-const Comment = ({comment, isReply}) => {
+interface CommentCardProps{
+  comment: Comment;
+  isReply: boolean;
+}
+
+const CommentCard = ({ comment, isReply } : CommentCardProps) => {
   const [commentText, setCommentText] = useState('');
   const [replyOn, setReplyOn] = useState(false);
   const { sendNotification } = useSocket();
-  const queryClient = useQueryClient();
 
   const navigate = useNavigate();
 
@@ -22,19 +26,13 @@ const Comment = ({comment, isReply}) => {
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState('');
 
-  const {data: replies, isLoading, isError: isQueryError, error: queryError} = useQuery({ 
-    queryKey: ["commentReplies", comment.id],
-    queryFn: () => getCommentReplies(comment.id),
-  });
-
-  const {mutateAsync: addReplyMutation} = useMutation({
-    mutationFn: addCommentReply,
-    onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["commentReplies", comment.id]
-      });
-    },
-  });
+  const { 
+    replies,
+    isRepliesLoading,
+    isRepliesError,
+    repliesError,
+    addReplyMutation 
+  } = useCommentData(comment.id);
 
   const { profilePicture } = useProfilePicture("commentUserProfilePicture", comment.author);
 
@@ -106,12 +104,13 @@ const Comment = ({comment, isReply}) => {
           <button onClick={() => setReplyOn(!replyOn)} className="comment-button">Reply</button>
           }
         </div>
-        {isQueryError && <ErrorFallback error={queryError.message}/>}
-        {isLoading ? <Loading/> :
+        {isRepliesError && <ErrorFallback error={repliesError.message}/>}
+        {isRepliesLoading ? 
+        <Loading/> :
         replies?.length > 0 &&
         <div className="replies-list">
         {replies?.map((reply, index) => 
-         <Comment key={index} comment={reply} isReply={true}/>
+         <CommentCard key={index} comment={reply} isReply={true}/>
         )}
         </div>
         }
@@ -120,4 +119,4 @@ const Comment = ({comment, isReply}) => {
   )
 }
 
-export default Comment
+export default CommentCard

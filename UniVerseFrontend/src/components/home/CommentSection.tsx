@@ -1,18 +1,17 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { addPostComment, getPostComments } from "../../services/postService";
-import Comment from "./Comment";
+import CommentCard from "./CommentCard";
 import { useEffect, useState } from "react";
 import useAuth from '../../hooks/auth/useAuth'
 import Loading from '../../components/fallback/Loading'
 import ErrorFallback from '../../components/fallback/ErrorFallback'
 import PostInterface from "../../interfaces/post/PostInterface";
 import { useSocket } from "../../hooks/useSocket";
+import useCommentsData from "../../hooks/query/useCommentsData";
 
 interface CommentSectionProps{
   post: PostInterface;
 }
 
-const CommentSection = ({post} : CommentSectionProps) => {
+const CommentSection = ({ post } : CommentSectionProps) => {
   const [commentText, setCommentText] = useState('');
   const { sendNotification } = useSocket();
 
@@ -21,21 +20,13 @@ const CommentSection = ({post} : CommentSectionProps) => {
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState('');
 
-  const queryClient = useQueryClient();
-
-  const {data: comments, isLoading, isError: isQueryError, error: queryError} = useQuery({ 
-    queryKey: ["postComments", post.id],
-    queryFn: () => getPostComments(post.id),
-  });
-
-  const {mutateAsync: addCommentMutation} = useMutation({
-    mutationFn: addPostComment,
-    onSuccess: () =>{
-      queryClient.invalidateQueries({
-        queryKey: ["postComments", post.id]
-      });
-    },
-  });
+  const { 
+    comments,
+    isCommentsLoading,
+    isCommentsError,
+    commentsError,
+    addCommentMutation
+  } = useCommentsData(post.id);
 
   useEffect(() => {
     setIsError(false);
@@ -61,12 +52,12 @@ const CommentSection = ({post} : CommentSectionProps) => {
     setCommentText('');
   }
 
-  if(isLoading){
+  if(isCommentsLoading){
     return <Loading/>
   }
 
-  if(isQueryError){
-    return <ErrorFallback error={queryError.message}/>
+  if(isCommentsError){
+    return <ErrorFallback error={commentsError.message}/>
   }
 
   return (
@@ -88,7 +79,7 @@ const CommentSection = ({post} : CommentSectionProps) => {
       <div className="comments-list">
       {comments?.length > 0 ? 
       comments?.map((comment, index) =>
-        <Comment key={index} comment={comment} isReply={false}/>
+        <CommentCard key={index} comment={comment} isReply={false}/>
       )
       :
         <div>No Comments.</div>
