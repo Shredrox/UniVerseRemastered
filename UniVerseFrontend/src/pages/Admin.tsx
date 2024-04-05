@@ -13,14 +13,18 @@ const Admin = () => {
   const {mutateAsync: approveUserMutation} = useMutation({
     mutationFn: approveUser,
     onSuccess: () =>{
-      queryClient.invalidateQueries(["registrationRequests"]);
+      queryClient.invalidateQueries({
+        queryKey: ["registrationRequests"]
+      });
     },
   });
 
   const {mutateAsync: rejectUserMutation} = useMutation({
     mutationFn: rejectUser,
     onSuccess: () =>{
-      queryClient.invalidateQueries(["registrationRequests"]);
+      queryClient.invalidateQueries({
+        queryKey: ["registrationRequests"]
+      });
     },
   });
 
