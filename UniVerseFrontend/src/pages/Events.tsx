@@ -1,23 +1,20 @@
-import Event from '../components/event/Event';
+import EventCard from '../components/event/EventCard';
 import { MdEventAvailable } from "react-icons/md";
 import { IoTrendingUp } from "react-icons/io5";
-import TrendingEvent from '../components/event/TrendingEvent';
-import useAuth from "../hooks/auth/useAuth";
+import TrendingEventCard from '../components/event/TrendingEventCard';
 import Loading from '../components/fallback/Loading'
 import useEventsData from '../hooks/query/useEventsData';
 
 const Events = () => {
-  const { auth } = useAuth();
-
   const { 
     eventsData, 
     isEventsLoading,
     isEventsError,
     eventsError,
-  } = useEventsData(auth?.username);
+  } = useEventsData();
 
   if(isEventsError){
-    throw Error(eventsError);
+    throw eventsError;
   }
 
   if(isEventsLoading){
@@ -30,7 +27,7 @@ const Events = () => {
         <h2><IoTrendingUp className='event-icon'/>Trending Events</h2>
         <div className='trending-events-list'>
         {eventsData.trendingEvents?.map((event, index) =>
-          <TrendingEvent key={index} event={event}/>
+          <TrendingEventCard key={index} event={event}/>
         )}
         </div>
       </div>
@@ -38,7 +35,7 @@ const Events = () => {
       <h2><MdEventAvailable className='event-icon'/>Events</h2>
         <div className='events-list'>
         {eventsData.events?.map((event, index) =>
-          <Event key={index} event={event}/>
+          <EventCard key={index} event={event}/>
         )}
         </div>
       </div>

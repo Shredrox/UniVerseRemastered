@@ -1,7 +1,12 @@
 import useAuth from "../../hooks/auth/useAuth";
 import useEventData from "../../hooks/query/useEventData";
+import GroupEvent from "../../interfaces/GroupEvent";
 
-const Event = ({event}) => {
+interface EventCardProps{
+  event: GroupEvent;
+}
+
+const EventCard = ({ event } : EventCardProps) => {
   const { auth } = useAuth();
 
   const { 
@@ -48,4 +53,4 @@ const Event = ({event}) => {
   )
 }
 
-export default Event
+export default EventCard
