@@ -30,7 +30,9 @@ const Comment = ({comment, isReply}) => {
   const {mutateAsync: addReplyMutation} = useMutation({
     mutationFn: addCommentReply,
     onSuccess: () =>{
-      queryClient.invalidateQueries(["commentReplies", comment.id]);
+      queryClient.invalidateQueries({
+        queryKey: ["commentReplies", comment.id]
+      });
     },
   });
 

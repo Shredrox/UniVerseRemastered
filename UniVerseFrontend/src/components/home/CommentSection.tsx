@@ -31,7 +31,9 @@ const CommentSection = ({post} : CommentSectionProps) => {
   const {mutateAsync: addCommentMutation} = useMutation({
     mutationFn: addPostComment,
     onSuccess: () =>{
-      queryClient.invalidateQueries(["postComments", post.id]);
+      queryClient.invalidateQueries({
+        queryKey: ["postComments", post.id]
+      });
     },
   });
 
