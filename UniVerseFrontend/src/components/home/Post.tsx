@@ -49,7 +49,7 @@ const Post = ({post} : PostProps) => {
     );
   }
 
-  const handleUnike = () => {
+  const handleUnlike = () => {
     unlikePostMutation({postId: post.id, username: auth?.username});
   }
 
@@ -78,7 +78,7 @@ const Post = ({post} : PostProps) => {
             {profilePicture?.size > 0 ? 
             <img className='author-profile-picture' src={URL.createObjectURL(profilePicture)} alt="ProfilePicture" /> 
             :
-            <FaUserAstronaut className='post-profile-picture-placeholer-icon'/>}
+            <FaUserAstronaut className='post-profile-picture-placeholder-icon'/>}
           </div>
           <span className='post-author-span' onClick={() => navigate(`/profile/${post.authorName}`)}>{post.authorName}</span>
           <span className='post-timestamp'>{post.timestamp}</span>
@@ -98,7 +98,7 @@ const Post = ({post} : PostProps) => {
         <div className='interaction-container'>
           <span>
             {postData.isLiked ? 
-            <FaHeart onClick={handleUnike} className='interaction-icon'/>
+            <FaHeart onClick={handleUnlike} className='interaction-icon'/>
             :
             <FaRegHeart onClick={handleLike} className='interaction-icon'/>
             }

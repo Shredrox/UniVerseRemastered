@@ -11,7 +11,7 @@ export default interface SocketContextType {
   setUserChats: (newUserChats : ChatInterface[]) => void;
   createHubConnection: () => void;
   disconnectFromHub: () => void;
-  setChatMessages: (newMessages : Message[]) => void; //
+  setChatMessages: (newMessages : Message[]) => void;
   sendMessage: ({ message, sender, receiver }: { message: string; sender: string; receiver: string; }) => Promise<void>;
   createChat: (chat: ChatInterface) => Promise<void>;
   chats: ChatInterface[];

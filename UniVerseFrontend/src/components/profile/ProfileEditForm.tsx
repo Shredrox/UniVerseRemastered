@@ -27,9 +27,9 @@ const ProfileEditForm = ({profileUser, updateUserProfileMutation, setIsEditOn}) 
   }, [password])
 
   const handleProfileEdit = async () =>{
-    const validPasswrd = await confirmPassword({username: profileUser.username, password: password});
+    const validPassword = await confirmPassword({username: profileUser.username, password: password});
 
-    if(!validPasswrd){
+    if(!validPassword){
       setIsValidPassword(false);
       return;
     }
@@ -71,7 +71,7 @@ const ProfileEditForm = ({profileUser, updateUserProfileMutation, setIsEditOn}) 
       </label>
       {image && <label>{imageName}</label>}
       <input 
-      	type="file"
+        type="file"
         id="file"
         accept="image/*"
         style={{display: "none"}}

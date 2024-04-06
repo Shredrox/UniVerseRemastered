@@ -10,7 +10,7 @@ const SocialPanel = () => {
   const { auth } = useAuth();
 
   const [isNotificationTabOn, setIsNotificationTabOn] = useState(false);
-  const [isFriendRequstsTabOn, setIsFriendRequstsTabOn] = useState(false);
+  const [isFriendRequestsTabOn, setIsFriendRequestsTabOn] = useState(false);
 
   const { 
     alertData, 
@@ -56,7 +56,7 @@ const SocialPanel = () => {
           <div className="notification-count">{unreadNotificationsCount}</div>}
         </div>
         <div className="friend-requests-container">
-          <FaUserFriends onClick={() => setIsFriendRequstsTabOn(!isFriendRequstsTabOn)} className="friend-request-icon"/>
+          <FaUserFriends onClick={() => setIsFriendRequestsTabOn(!isFriendRequestsTabOn)} className="friend-request-icon"/>
           {alertData.friendRequests?.length > 0 && 
           <div className="notification-count">{alertData.friendRequests?.length}</div>}
         </div>
@@ -71,7 +71,7 @@ const SocialPanel = () => {
         </div>
       </div>
       }
-      {isFriendRequstsTabOn &&
+      {isFriendRequestsTabOn &&
       <div className="notification-list-container">
         <h3>Friend Requests</h3>
         <div className="notification-list">

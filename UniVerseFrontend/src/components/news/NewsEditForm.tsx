@@ -54,7 +54,7 @@ const NewsEditForm = ({news, setIsEditOn, updateNewsMutation}) => {
       </label>
       {image && <label>{imageName}</label>}
       <input 
-      	type="file"
+        type="file"
         id="file"
         accept="image/*"
         style={{display: "none"}}

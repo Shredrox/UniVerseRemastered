@@ -37,7 +37,7 @@ const Profile = () => {
           {profileData.profilePicture.size > 0 ? 
           <img className='profile-page-profile-picture' src={URL.createObjectURL(profileData.profilePicture)} alt='postImage'/> 
           : 
-          <FaUserAstronaut className='profile-picture-placeholer-icon'/>}
+          <FaUserAstronaut className='profile-picture-placeholder-icon'/>}
         </div>
         <h3>{profileData.user?.username}</h3>
         <div className="profile-social-tab">

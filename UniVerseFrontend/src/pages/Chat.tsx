@@ -77,7 +77,13 @@ const Chat = () => {
         }
       </div>
       <div className='chat-input-container'>
-        <textarea value={message} onKeyDown={handleKeyPress} onChange={(e) => setMessage(e.target.value)} className='chat-textarea' placeholder='Type a message...'></textarea>
+        <textarea 
+          value={message} 
+          onKeyDown={handleKeyPress} 
+          onChange={(e) => setMessage(e.target.value)} 
+          className='chat-textarea' 
+          placeholder='Type a message...'>
+        </textarea>
         <button onClick={handleMessageSent} className='chat-send-button'>Send</button>
       </div>
     </div>

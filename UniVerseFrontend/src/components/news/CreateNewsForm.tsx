@@ -46,14 +46,14 @@ const CreateNewsForm = ({setIsAddingNews, addNewsMutation} : CreateNewsFormProps
       </label>
       {image && <label>{imageName}</label>}
       <input 
-      	type="file"
+        type="file"
         id="file"
         accept="image/*"
         style={{display: "none"}}
         onChange={handleImageChange}
       />
       <input value={title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder='Title'/>
-      <textarea className="edit-textarea" value={content} onChange={(e) => setContent(e.target.value)} type="text" placeholder='Content' />
+      <textarea className="edit-textarea" value={content} onChange={(e) => setContent(e.target.value)} placeholder='Content' />
       <div className="pinned">
         Pinned: <input type="checkbox" checked={pinned} onChange={() => setPinned(!pinned)} />
       </div>

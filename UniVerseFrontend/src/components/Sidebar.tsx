@@ -62,7 +62,7 @@ const Sidebar = () => {
           {profilePicture?.size > 0 ? 
           <img src={URL.createObjectURL(profilePicture)} alt="ProfilePicture" /> 
           :
-          <FaUserAstronaut className='profile-picture-placeholer-icon'/>}
+          <FaUserAstronaut className='profile-picture-placeholder-icon'/>}
         </div>
         <label className='username' onClick={() => navigate(`/profile/${auth.username}`)}>{auth.username}</label> 
         <button onClick={handleLogout} className='confirm-button'>Log Out</button>         

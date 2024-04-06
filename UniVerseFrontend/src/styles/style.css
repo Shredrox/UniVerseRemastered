@@ -674,7 +674,7 @@ body{
   align-items: center;
 }
 
-.profile-picture-placeholer-icon{
+.profile-picture-placeholder-icon{
   width: 60px;
   height: 60px;
 }
@@ -1076,7 +1076,7 @@ body{
   object-fit: cover;
 }
 
-.post-profile-picture-placeholer-icon{
+.post-profile-picture-placeholder-icon{
   width: 25px;
   height: 25px;
 }

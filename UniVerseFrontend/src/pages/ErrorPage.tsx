@@ -4,7 +4,7 @@ const ErrorPage = () => {
   return (
     <div className='error-page'>
       <div className='error-card'>
-        <span><MdErrorOutline />An error has occured.</span>
+        <span><MdErrorOutline />An error has occurred.</span>
         <button 
           onClick={() => window.location.reload()} 
           className="confirm-button">

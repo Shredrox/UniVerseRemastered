@@ -58,7 +58,7 @@ export const SocketProvider = ({ children } : SocketProviderProps) => {
       connection.on('ReceiveMessage', onMessageReceived);
       connection.on('ChatCreated', onChatCreated);
       connection.on('ReceiveNotification', onNotificationReceived);
-      connection.on('ReceiveFriendRequest', onFriendRequestReceieved);
+      connection.on('ReceiveFriendRequest', onFriendRequestReceived);
       connection.on('ReceiveOnlineAlert', onFriendOnline);
     }
   }, [connection]);
@@ -133,7 +133,7 @@ export const SocketProvider = ({ children } : SocketProviderProps) => {
   }
 
   //Friend Requests
-  const onFriendRequestReceieved = (friendRequest : FriendRequest) => {
+  const onFriendRequestReceived = (friendRequest : FriendRequest) => {
     setFriendRequests((prevFriendRequests) => [...prevFriendRequests, friendRequest]);
   }
 

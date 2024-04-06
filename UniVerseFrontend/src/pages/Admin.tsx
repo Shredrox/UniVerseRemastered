@@ -37,7 +37,7 @@ const Admin = () => {
           <div key={index} className="user-registration-request">
             <div className="user-registration-request-info">
               <div className='profile-picture'>
-                <FaUserAstronaut className='profile-picture-placeholer-icon'/>
+                <FaUserAstronaut className='profile-picture-placeholder-icon'/>
               </div>
               <div style={{display: "flex", flexDirection: "column"}}>
                 <span>Username: {user.username}</span>
