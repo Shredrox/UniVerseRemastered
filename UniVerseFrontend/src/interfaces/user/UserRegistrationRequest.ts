@@ -1,4 +1,4 @@
-export default interface getUserRegistrationRequest{
+export default interface UserRegistrationRequest{
   username: string;
   email: string;
 }
