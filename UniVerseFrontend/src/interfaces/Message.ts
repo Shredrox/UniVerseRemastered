@@ -2,5 +2,5 @@ export default interface Message{
   content: string;
   sender: string;
   receiver: string;
-  timestamp: Date;
+  timestamp: string;
 }
