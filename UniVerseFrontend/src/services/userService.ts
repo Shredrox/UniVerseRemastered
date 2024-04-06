@@ -1,5 +1,5 @@
 import axios from "../axios/axios";
-import getUserRegistrationRequest from "../interfaces/user/UserRegistrationRequest";
+import UserRegistrationRequest from "../interfaces/user/UserRegistrationRequest";
 
 export const getUsers = async () =>{
   const response = await axios.get('User');
@@ -52,7 +52,7 @@ export const checkFriendship = async (user1Name : string, user2Name : string) =>
   return response.data;
 };
 
-export const addFriend = async ({ loggedInUser, profileUser }) =>{
+export const addFriend = async ({ loggedInUser, profileUser } : {loggedInUser: string, profileUser: string}) =>{
   const response = await axios.post(`Friendship/${loggedInUser}/add-friend/${profileUser}`);
   return response.data;
 }
@@ -62,7 +62,7 @@ export const acceptFriendRequest = async (friendshipId : number) =>{
   return response.data;
 }
 
-export const removeFriend = async ({ loggedInUser, profileUser }) =>{
+export const removeFriend = async ({ loggedInUser, profileUser } : {loggedInUser: string, profileUser: string}) =>{
   const response = await axios.delete(`Friendship/${loggedInUser}/remove-friend/${profileUser}`);
   return response.data;
 }
@@ -72,29 +72,29 @@ export const rejectFriendRequest = async (friendshipId : number) =>{
   return response.data;
 }
 
-export const confirmPassword = async ({ username, password }) =>{
+export const confirmPassword = async ({ username, password } : {username: string, password: string}) =>{
   const details = { username: username, email: "", password: password };
 
   const response = await axios.post('Auth/confirm-password', details);
   return response.data;
 }
 
-export const updateUserProfile = async (data) =>{
+export const updateUserProfile = async (data : FormData) =>{
   const response = await axios.post('User/update-profile', data);
   return response.data;
 }
 
-export const getUserRegistrationRequests = async () : Promise<getUserRegistrationRequest[]> =>{
-  const resposne = await axios.get('User/registration-requests')
-  return resposne.data;
+export const getUserRegistrationRequests = async () : Promise<UserRegistrationRequest[]> =>{
+  const response = await axios.get('User/registration-requests')
+  return response.data;
 }
 
-export const approveUser = async (username) => {
+export const approveUser = async (username : string) => {
   const response = await axios.put(`User/${username}/approve`);
   return response.data;
 }
 
-export const rejectUser = async (username) => {
+export const rejectUser = async (username : string) => {
   const response = await axios.delete(`User/${username}/reject`);
   return response.data;
 }
