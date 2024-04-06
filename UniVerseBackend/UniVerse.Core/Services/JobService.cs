@@ -1,4 +1,5 @@
 ﻿using UniVerse.Core.DTOs.Requests;
+using UniVerse.Core.DTOs.Responses;
 using UniVerse.Core.Entities;
 using UniVerse.Core.Exceptions;
 using UniVerse.Core.Interfaces.IRepositories;
@@ -11,14 +12,36 @@ public class JobService(
     IUserRepository userRepository,
     IEmployerRepository employerRepository) : IJobService
 {
-    public async Task<List<JobOffer>> GetAllJobs()
+    public async Task<List<JobOfferResponseDto>> GetAllJobs()
     {
-        return await jobRepository.GetJobs();
+        var jobs = await jobRepository.GetJobs();
+        
+        return jobs.Select(j => new JobOfferResponseDto(
+            j.Id,
+            j.Title,
+            j.Company,
+            j.Description,
+            j.Requirements,
+            j.Location,
+            j.Type,
+            j.Salary)
+        ).ToList();
     }
 
-    public async Task<JobOffer?> GetJobById(int jobId)
+    public async Task<JobOfferResponseDto?> GetJobById(int jobId)
     {
-        return await jobRepository.GetJobOfferById(jobId);
+        var job = await jobRepository.GetJobOfferById(jobId);
+
+        return new JobOfferResponseDto(
+            job.Id,
+            job.Title,
+            job.Company,
+            job.Description,
+            job.Requirements,
+            job.Location,
+            job.Type,
+            job.Salary
+        );
     }
 
     public async Task<bool> IsAppliedToJob(int jobId, string username)
@@ -46,6 +69,7 @@ public class JobService(
         var jobOffer = new JobOffer
         {
             Title = request.Title,
+            Company = request.Company,
             Description = request.Description,
             Location = request.Location,
             Salary = request.Salary,
