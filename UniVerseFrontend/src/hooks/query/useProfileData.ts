@@ -29,8 +29,8 @@ const useProfileData = (profileUser : string, loggedUser : string) =>{
   });
 
   const {data: friendsCount, 
-		isLoading: isfriendsCountLoading, 
-		isError: isfriendsCountError, 
+		isLoading: isFriendsCountLoading, 
+		isError: isFriendsCountError, 
 		error: friendsCountError
 	} = useQuery({
     queryKey: ["friendsCount", user?.username],
@@ -80,9 +80,9 @@ const useProfileData = (profileUser : string, loggedUser : string) =>{
     mutationFn: updateUserProfile,
   });
 
-  const isProfileError =  isProfileUserError || isFriendshipError || isfriendsCountError || isPostsCountError || isProfilePictureError;
+  const isProfileError =  isProfileUserError || isFriendshipError || isFriendsCountError || isPostsCountError || isProfilePictureError;
   const profileError = profileUserError || friendshipError || friendsCountError || postsCountError || profilePictureError;
-  const isProfileLoading = isProfileUserLoading || isFriendshipLoading || isfriendsCountLoading || isPostsCountLoading || isProfilePictureLoading;
+  const isProfileLoading = isProfileUserLoading || isFriendshipLoading || isFriendsCountLoading || isPostsCountLoading || isProfilePictureLoading;
 
   return {
     profileData: {user, loggedInUserProfile, friendshipStatus, friendsCount, postsCount, profilePicture}, 
