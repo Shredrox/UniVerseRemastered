@@ -9,7 +9,7 @@ interface AuthProviderProps {
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({children} : AuthProviderProps) => {
-  const [auth, setAuth] = useState<Auth>({});
+  const [auth, setAuth] = useState<Auth | null>(null);
 
   const contextValue : AuthContextType = {
     auth,

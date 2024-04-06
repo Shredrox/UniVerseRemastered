@@ -9,7 +9,7 @@ const useLogout = () =>{
   const logout = async () => {
     sendIsOnlineAlert(auth?.username);
 
-    setAuth({}); 
+    setAuth(null); 
     try{
       await axios.post('Auth/logout',{},{
         withCredentials: true
