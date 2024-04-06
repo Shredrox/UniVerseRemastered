@@ -19,7 +19,7 @@ export const addNews = async (news) =>{
   return await axios.post('News/create-news', news);
 }
 
-export const updateNews = async (data) =>{
+export const updateNews = async (data : FormData) =>{
   return await axios.post(`News/update`, data);
 }
 

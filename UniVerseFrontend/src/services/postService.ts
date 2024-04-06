@@ -56,7 +56,7 @@ export const getPostCommentCount = async (postId : number) =>{
   return response.data;
 }
 
-export const addPostComment = async ({postId, username, content}) =>{
+export const addPostComment = async ({postId, username, content} : {postId: number, username: string, content: string}) =>{
   const commentRequest = {
     postId: postId,
     username: username,
@@ -67,7 +67,7 @@ export const addPostComment = async ({postId, username, content}) =>{
   return response.data;
 }
 
-export const addCommentReply = async ({commentId, username, content}) => {
+export const addCommentReply = async ({commentId, username, content} : {commentId: number, username: string, content: string}) => {
   const commentRequest = {
     postId: -1,
     username: username,
@@ -89,12 +89,12 @@ export const getIsLiked = async (postId : number, username : string) =>{
   return response.data;
 }
 
-export const likePost = async (like) =>{
+export const likePost = async (like : {postId: number, username: string}) =>{
   const response = await axios.post(`Like/post/like`, like);
   return response.data;
 }
 
-export const unlikePost = async ({postId, username}) =>{
+export const unlikePost = async ({postId, username} : {postId: number, username: string}) =>{
   const response = await axios.delete(`Like/post/${postId}/unlike`, {
     params: {
       username
