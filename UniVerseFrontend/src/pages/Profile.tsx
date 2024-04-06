@@ -23,7 +23,7 @@ const Profile = () => {
   const [isEditOn, setIsEditOn] = useState(false);
 
   if(isProfileError){
-    throw Error(profileError);
+    throw profileError;
   }
 
   if(isProfileLoading){

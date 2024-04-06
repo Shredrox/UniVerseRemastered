@@ -38,7 +38,7 @@ const JobDetails = () => {
   }
 
   if(isJobError){
-    throw Error(jobError);
+    throw jobError;
   }
 
   if(isJobLoading){

@@ -20,7 +20,7 @@ const News = () => {
   const [isAddingNews, setIsAddingNews] = useState(false);
 
   if(isNewsDataError){
-    throw Error(newsDataError);
+    throw newsDataError;
   }
 
   return (

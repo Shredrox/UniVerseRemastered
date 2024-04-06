@@ -32,7 +32,7 @@ const NewsDetails = () => {
   }
 
   if(isNewsError){
-    throw Error(newsError);
+    throw newsError;
   }
 
   if(isNewsLoading){

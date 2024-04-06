@@ -58,7 +58,7 @@ const Jobs = () => {
   }, [jobOffers, selectedFilters]);
 
   if(isError){
-    throw Error(error);
+    throw error;
   }
 
   if(isLoading){
