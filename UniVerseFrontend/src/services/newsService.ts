@@ -15,7 +15,7 @@ export const getNewsById = async (newsId : number) =>{
   return response.data;
 }
 
-export const addNews = async (news : {title: string, content: string, pinned: boolean, image: File}) =>{
+export const addNews = async (news : FormData) =>{
   return await axios.post('News/create-news', news);
 }
 
