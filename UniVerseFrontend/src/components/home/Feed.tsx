@@ -38,7 +38,7 @@ const Feed = () => {
   }
 
   if(isPostsError){
-    throw Error(postsError);
+    throw postsError;
   }
 
   if(isPostsLoading){
