@@ -42,7 +42,7 @@ function Calendar({
         day_range_end: "day-range-end",
         day_selected:
           "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground bg-sky-800",
-        day_today: "bg-accent text-accent-foreground",
+        day_today: "bg-white text-black",
         day_outside:
           "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
         day_disabled: "text-muted-foreground opacity-50",
@@ -52,8 +52,8 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4 text-white" />,
-        IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4 text-white" />,
+        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4 text-white cursor-pointer" />,
+        IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4 text-white cursor-pointer" />,
       }}
       {...props}
     />
