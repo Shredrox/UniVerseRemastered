@@ -17,6 +17,7 @@ import NotFound from './pages/NotFound'
 import PersistLogin from './routes/PersistLogin'
 import RouterErrorFallback from './components/fallback/RouterErrorFallback'
 import Admin from './pages/Admin'
+import Courses from './pages/Courses'
 
 function App() {
   const router = createBrowserRouter(
@@ -31,6 +32,7 @@ function App() {
               <Route path="/profile/:username" element={<Profile/>}/>
               <Route path="/news" element={<News/>}/>
               <Route path="/news/:newsId" element={<NewsDetails/>}/>
+              <Route path="/courses" element={<Courses/>}/>
               <Route path="/jobs" element={<Jobs/>}/>
               <Route path="/jobs/:jobId" element={<JobDetails/>}/>
               <Route path="/events" element={<Events/>}/>
