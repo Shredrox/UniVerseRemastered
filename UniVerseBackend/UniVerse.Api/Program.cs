@@ -87,8 +87,6 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.UseAuthorization();
-
 app.MapControllers();
 
 app.MapHub<SignalHub>("/signal-hub");
