@@ -28,7 +28,7 @@ export const getPostImage = async (id : number) =>{
   return response.data;
 }
 
-export const addPost = async (post : number) =>{
+export const addPost = async (post : FormData) =>{
   return await axios.post('Post', post, { responseType: 'blob'});
 }
 
